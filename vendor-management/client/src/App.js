@@ -51,8 +51,6 @@ const App = () => {
             
             <Route path="/login" element={<Login/>} />
 
-            <Route path="/vendors" element={<Navbar/>} />
-
             {/* show error page if route doesnt match with anything */}
             <Route path="*" element={<Error/>} />
             </Routes>
