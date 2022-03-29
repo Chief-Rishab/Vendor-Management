@@ -3,10 +3,10 @@ const cors = require('cors')
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const vendorAuthRouter = require('./routes/vendor_register/auth')
-require('./services/conn');
+const vendorsRouter = require('./routes/vendors/vendors.router')
+// require('./services/conn');
 dotenv.config({path: './config.env'})
 
-const vendorsRouter = require('./routes/vendors/vendors.router')
 
 const app = express()
 

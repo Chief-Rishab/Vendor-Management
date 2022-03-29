@@ -2,8 +2,8 @@ const express= require('express');
 const router= express.Router();
 const bcrypt= require('bcryptjs');
 
-require('../db/conn');
-const User = require("../model/userSchema");
+// require('../db/conn');
+const User = require('./../../models/vendors.mongo')
 
 // router.get('/',(req,res)=>{
 //     res.send('hello world yoooooooooo from router auth.js server');
