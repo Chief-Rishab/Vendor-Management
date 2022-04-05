@@ -360,6 +360,14 @@ figure {
     font-size: 26px;
   }
 }
+
+.row {
+  width: 50%;
+  margin-left: 10%;
+}
+
+
+
 /* .App {
   text-align: center;
 }

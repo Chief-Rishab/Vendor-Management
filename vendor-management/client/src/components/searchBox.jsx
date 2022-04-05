@@ -1,14 +1,21 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
 
-const SearchBox = ({value, onChange}) => {
+const SearchBox = ({ value, onChange }) => {
+
+  const [searchString, setSearchString] = useState("");
   return (
     <TextField
       sx={{ margin: 3, width: 0.5 }}
-      value={value}
+      value={searchString}
       placeholder="Search for restaurants"
       id="fullWidth"
-      onChange={e => onChange(e.currentTarget.value)}
+      onChange={(e) => {
+        console.log(e.target.value)
+        setSearchString(e.target.value)
+        onChange(e.currentTarget.value);
+      }}
     />
   );
 };
