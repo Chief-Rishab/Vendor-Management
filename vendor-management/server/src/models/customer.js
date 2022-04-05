@@ -47,9 +47,10 @@ CustomerSchema.pre('save',function(next){
 });
 
 //method
-CustomerSchema.method.CustomerPassword = function(password,cb){
+CustomerSchema.methods.comparePassword = function(password,cb){
     bcrypt.compare(password,this.password,(err,isMatch)=>{ // first argument is password from client,
-        //second is hashed password, third is callback 
+        //second is hashed password, third is callback
+        //console.log(password, this.password) 
         if(err)
             return cb(err);
         else

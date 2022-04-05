@@ -1,15 +1,15 @@
 const express=require('express');
 const userRouter=express.Router();
 const passport=require('passport');
-const passportConfig=require('../../../../passport');       
+const passportConfig= require('../../../../passport');       
 const JWT=require('jsonwebtoken');
 const User=require('../../models/customer'); 
 
 const signToken=userID=>{
     return JWT.sign({
-        iss: "SmartVMC",
+        iss: "SmartVMC",   //payload
         sub: userID
-    },"SmartVMC",{expiresIn:"1h"});
+    },"SmartVMC",{expiresIn:"1h"});   //2nd argument is the key for passport to verify the token is legitimate
 }
 
 userRouter.post('/register',(req,res)=>{
@@ -37,14 +37,19 @@ userRouter.post('/register',(req,res)=>{
     });
 
 //login route
-// userRouter.post('/login',passport.authenticate('local',{session: false}),(req,res)=>{
-//     if(req.isAuthenticated()){
-//         const {_id,username}=req.user;
-//         const token=signToken(_id);
-//         res.cookie('access_token',token,{httpOnly: true, sameSite:true});
-//         res.status(200).json({isAuthenticated: true, user:{username}});
-//     }
-// });
+userRouter.post('/login',passport.authenticate('local',{session: false}),(req,res)=>{
+    if(req.isAuthenticated()){
+        const {_id,username}=req.user;
+        const token=signToken(_id);
+        res.cookie('access_token',token,{httpOnly: true, sameSite:true}); 
+        /* httpOnly will make sure that this token cant be changed from the client side using javascript 
+        only with hence guards from cross-site scripting attacks
+        SameSite prevents from cross-site forgery attacks
+        Thus important for security by ensuring JWT token is not stolen
+        */ 
+        res.status(200).json({isAuthenticated: true, user:{username}});
+    }
+});
 
 
 module.exports= userRouter;
