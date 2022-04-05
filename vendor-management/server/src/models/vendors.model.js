@@ -14,8 +14,6 @@ const vendor_1 = {
     menu: []
 }
 
-
-
 async function addVendor(vendor){
 
     await vendorsDatabase.findOneAndUpdate({
