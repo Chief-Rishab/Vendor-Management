@@ -1,4 +1,5 @@
 const vendorsDatabase = require('./vendors.mongo')
+const mongoose = require('mongoose')
 
 const vendor_1 = {
 
@@ -31,6 +32,13 @@ async function getVendors() {
 
 }
 
+async function getVendorByID(vendorID){
+
+    console.log(mongoose.Types.ObjectId.isValid(vendorID));
+    return await vendorsDatabase.findById(vendorID)
+}
+
 module.exports = {
     getVendors,
+    getVendorByID,
 }

@@ -36,7 +36,7 @@ const vendorSchema = new mongoose.Schema({
         required:false
     },
     orderList:{
-        type:[Object],
+        type:[mongoose.Schema.Types.ObjectId],
         default:[],
         required:false
     },

@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Grid } from "@mui/material";
 
-const NewVendor = ({ name, location, rating }) => {
+const NewVendor = ({ vendorID, name, location, rating , onSelect}) => {
   return (
     <Box>
       <Card container spacing={2} sx={{ mb: 2, maxWidth: 680 }}>
@@ -25,7 +23,9 @@ const NewVendor = ({ name, location, rating }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <Button size="small" color="primary" sx = {{m: 1}}>
+              <Button size="small" color="primary" sx = {{m: 1}} onClick = {() => {
+                onSelect(vendorID)
+              }}>
                 order
               </Button>
             </Grid>

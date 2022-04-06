@@ -31,7 +31,9 @@ import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Error from './components/Error';
+import NewVendorList from './components/vendorsList';
 import NavBar from './components/Navbar';
+import VendorListing from './components/vendorListing';
 
 //App.js will contain everything
 //imported to index.js
@@ -51,8 +53,13 @@ const App = () => {
             
             <Route path="/login" element={<Login/>} />
 
+            <Route path="/vendors" element={<NewVendorList/>} />
+
+            <Route path="/vendors/:id" element={<VendorListing/>} />
+
             {/* show error page if route doesnt match with anything */}
             <Route path="*" element={<Error/>} />
+
             </Routes>
         </>
     )
