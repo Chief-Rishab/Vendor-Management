@@ -51,5 +51,12 @@ userRouter.post('/login',passport.authenticate('local',{session: false}),(req,re
     }
 });
 
+// logout route
+userRouter.get('/logout',passport.authenticate('jwt',{session: false}),(req,res)=>{
+    //if(req.isAuthenticated())
+    res.clearCookie('access_token');
+    //console.log('access_token');
+    res.json({user: {username : ""},success: true});
+});
 
 module.exports= userRouter;
