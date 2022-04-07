@@ -37,6 +37,7 @@ import VendorListing from './components/vendorListing';
 //App.js will contain everything
 //imported to index.js
 //to show whatever's in index.js, document.getElementById(root)
+
 const App = () => {
     const {user,setUser,isAuthenticated,setIsAuthenticated}=useContext(AuthContext);
     console.log(user);
