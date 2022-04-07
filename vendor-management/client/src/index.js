@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import AuthProvider from './Context/AuthContext_consumer';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
@@ -8,10 +9,13 @@ import { BrowserRouter } from "react-router-dom";
 import FoodItem from './components/foodItem';
 import VendorListing from './components/vendorListing';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App/>
+    <AuthProvider>
+        <App/>
+    </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

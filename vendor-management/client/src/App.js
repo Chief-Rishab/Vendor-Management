@@ -20,7 +20,8 @@
 
 // export default App;
 
-import React from 'react'
+import React,{useContext} from 'react'
+import { AuthContext } from './Context/AuthContext_consumer';
 import {Switch,Route, Routes } from "react-router-dom";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,6 +40,9 @@ import VendorListing from './components/vendorListing';
 //imported to index.js
 //to show whatever's in index.js, document.getElementById(root)
 const App = () => {
+    const {user,setUser,isAuthenticated,setIsAuthenticated}=useContext(AuthContext);
+    console.log(user);
+    console.log(isAuthenticated);
     return (
         <>
         <Navbar/>

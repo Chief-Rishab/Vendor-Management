@@ -59,4 +59,12 @@ userRouter.get('/logout',passport.authenticate('jwt',{session: false}),(req,res)
     res.json({user: {username : ""},success: true});
 });
 
+//incase you want to write roles add a vendor route here
+
+
+//to keep user signed in in case he closes the app but didnt logged out
+userRouter.get('/authenticated',passport.authenticate('jwt',{session: false}),(req,res)=>{
+const {username}=req.user;
+res.status(200).json({isAuthenticated : true, user: {username}});
+});
 module.exports= userRouter;
