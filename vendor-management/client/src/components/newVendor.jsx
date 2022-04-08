@@ -6,15 +6,28 @@ import Box from "@mui/material/Box";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Grid } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+
+const Img = styled("img")({
+  margin: "auto",
+  display: "block",
+  maxWidth: "100%",
+  maxHeight: "100%",
+});
 
 const NewVendor = ({ vendorID, name, location, rating , onSelect}) => {
   return (
     <Box>
       <Card container spacing={2} sx={{ mb: 2, maxWidth: 680 }}>
         <Grid item></Grid>
+        <Img alt="image" src={require("./../imgs/cemetery.jpeg")} />
         <Grid item xs={12} sm container>
+        
           <Grid item xs container direction="column" spacing={2}>
+            
             <Grid item xs>
+              
               <Typography gutterBottom variant="h5" component="div" sx = {{m: 2}}>
                 {name}
               </Typography>

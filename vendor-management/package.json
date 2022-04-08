@@ -15,6 +15,9 @@
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
-    "mongoose": "^6.2.9"
+    "mongoose": "^6.2.9",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }
