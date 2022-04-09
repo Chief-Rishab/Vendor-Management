@@ -7,7 +7,7 @@ const User=require('./server/src/models/customer');
 const cookieExtractor=req=>{
     let token=null;
     if(req && req.cookies){
-        token=req.cookies["access tokeen"];
+        token=req.cookies["access_token"];
     }
     return token;
 }
