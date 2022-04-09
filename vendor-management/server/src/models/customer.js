@@ -3,8 +3,7 @@ const bcrypt= require('bcrypt');
 const CustomerSchema=new mongoose.Schema({
     username:{
         type:String,
-        required: true,
-        min: 6
+        required: true
     },
     password:{
         type: String,
@@ -12,15 +11,15 @@ const CustomerSchema=new mongoose.Schema({
     },
     phoneNo:{
         type: String,
-        required:true
+        required:false
     },
     email:{
         type:String,
-        required:true
+        required:false
     },
     address:{
         type: String,
-        // required: true
+        required: false
     },
     orderList:{
         type:[Object],

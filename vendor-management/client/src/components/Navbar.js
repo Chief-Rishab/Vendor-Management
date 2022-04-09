@@ -1,3 +1,4 @@
+/*
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
 import logo from "../imgs/11.png";
@@ -50,6 +51,104 @@ const Navbar = () => {
         </div>
         </nav>
         </>
+    )
+}
+
+export default Navbar;
+*/
+import React, {useContext} from 'react';
+import {Link} from 'react-router-dom';
+import AuthService from '../services/customerAuthservice';
+import { AuthContext } from '../Context/AuthContext_consumer';
+
+const Navbar = props =>{
+    const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+    
+    const onClickLogoutHandler = ()=>{
+        AuthService.logout().then(data=>{
+            if(data.success){
+                setUser(data.user);
+                setIsAuthenticated(false);
+            }
+        });
+    }
+
+    const unauthenticatedNavBar = ()=>{
+        return (
+            <>
+                <Link to="/">
+                    <li className="nav-item nav-link">
+                        Home
+                    </li>
+                </Link>  
+                <Link to="/Login">
+                    <li className="nav-item nav-link">
+                        Login
+                    </li>
+                </Link>  
+                <Link to="/Signup">
+                    <li className="nav-item nav-link">
+                        Register
+                    </li>
+                </Link>  
+                <Link to="/vendors">
+                    <li className="nav-item nav-link">
+                        Vendor List
+                    </li>
+                </Link>
+            </>
+        )
+    }
+
+    const authenticatedNavBar = ()=>{
+        return(
+            <>
+                <Link to="/">
+                    <li className="nav-item nav-link">
+                        Home
+                    </li>
+                </Link> 
+                <Link to="/Cart">
+                    <li className="nav-item nav-link">
+                        Cart
+                    </li>
+                </Link>
+                <Link to="/Orders">
+                    <li className="nav-item nav-link">
+                        Orders
+                    </li>
+                </Link>
+                <Link to="/Vendors">
+                    <li className="nav-item nav-link">
+                        Restaurants
+                    </li>
+                </Link>      
+                {/* {
+                    user.role === "admin" ? 
+                    <Link to="/admin">
+                        <li className="nav-item nav-link">
+                            Admin
+                        </li>
+                    </Link> : null
+                }   */}
+                <button type="button" 
+                        className="btn btn-link nav-item nav-link" 
+                        onClick={onClickLogoutHandler}>Logout</button>
+            </>
+        )
+    }
+    return(
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <Link to="/">
+                <div className="navbar-brand">SmartVMC</div>
+            </Link>
+            <div className="collapse navbar-collapse" id="navbarText">
+                <ul className="navbar-nav mr-auto">
+                    {
+                    !isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
+                </ul>
+            </div>
+        </nav>
     )
 }
 
