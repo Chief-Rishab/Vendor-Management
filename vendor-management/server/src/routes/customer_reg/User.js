@@ -1,9 +1,9 @@
 const express=require('express');
 const userRouter=express.Router();
-const passport=require('passport');
-const passportConfig= require('../../../../passport');       
+const passport=require('passport');     
 const JWT=require('jsonwebtoken');
 const User=require('../../models/customer'); 
+require('../../../../passport')(passport);  
 
 const signToken=userID=>{
     return JWT.sign({
