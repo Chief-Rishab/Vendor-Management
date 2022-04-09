@@ -5,10 +5,6 @@ import { HttpGetVendorByID } from "../hooks/requests";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-function childVendor() {
-  return <div>Hello</div>;
-}
-
 const VendorListing = () => {
   const [currentVendor, setVendor] = useState({});
   const [searchQuery, setQuery] = useState("");

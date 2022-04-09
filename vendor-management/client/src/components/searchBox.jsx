@@ -12,7 +12,7 @@ const SearchBox = ({ value, onChange }) => {
       placeholder="Search for restaurants"
       id="fullWidth"
       onChange={(e) => {
-        console.log(e.target.value)
+        console.log("Value: ", e.target.value)
         setSearchString(e.target.value)
         onChange(e.currentTarget.value);
       }}

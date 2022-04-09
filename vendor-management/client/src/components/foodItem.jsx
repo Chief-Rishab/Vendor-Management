@@ -26,7 +26,7 @@ class FoodItem extends Component {
         sx={{
           p: 2,
           margin: "auto",
-          maxWidth: 500,
+          maxWidth: 300,
           flexGrow: 1,
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -35,7 +35,7 @@ class FoodItem extends Component {
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase sx={{ width: 128, height: 128 }}>
-              <Img alt="image" src="./../imgs/pizza.jpg" />
+              <Img alt="image" src={require("./../imgs/pizza.jpg")} />
             </ButtonBase>
           </Grid>
           <Grid item xs={12} sm container>
