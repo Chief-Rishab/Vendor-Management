@@ -32,6 +32,7 @@ import Signup from "./components/Signup";
 import Error from './components/Error';
 import NewVendorList from './components/vendorsList';
 import NavBar from './components/Navbar';
+import UserCart from './components/UserCart';
 import VendorListing from './components/vendorListing';
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 import CustomerRegister from './components/CustomerRegister';
@@ -63,6 +64,8 @@ const App =()=> {
             <Route path="/vendors" element={<NewVendorList/>} />
 
             <Route path="/vendors/:id" element={<VendorListing/>} />
+
+            <Route path="/Cart" element={<UserCart/>} />
 
             {/* show error page if route doesnt match with anything */}
             <Route path="*" element={<Error/>} />

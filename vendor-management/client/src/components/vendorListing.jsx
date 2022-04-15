@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import { useContext } from "react";
 import FoodItem from "./foodItem";
 import { Grid } from "@mui/material";
 import { HttpGetVendorByID } from "../hooks/requests";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext_consumer";
 
 const VendorListing = () => {
   const [currentVendor, setVendor] = useState({});
   const [searchQuery, setQuery] = useState("");
   const [currentMenu, setMenu] = useState([]);
+  const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+  console.log(user)
   const { id } = useParams();
 
   useEffect(async () => {
@@ -71,6 +75,9 @@ const VendorListing = () => {
               itemDescription={item.itemDescription}
               itemPrice={item.itemPrice}
               isVeg={item.isVeg}
+              isAuthenticated = {isAuthenticated}
+              user = {user}
+              vendor = {id}
             />
           ))}
         </Grid>

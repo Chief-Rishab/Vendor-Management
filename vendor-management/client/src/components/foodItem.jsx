@@ -6,10 +6,11 @@ import Paper from "@mui/material/Paper";
 import ButtonBase from "@mui/material/ButtonBase";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import { HttpGetUserByUsername, HttpAddItemToCart } from "./../hooks/requests";
 
 const Img = styled("img")({
   margin: "auto",
@@ -19,7 +20,59 @@ const Img = styled("img")({
 });
 
 class FoodItem extends Component {
-  state = {};
+  state = {
+    isAuthenticated: this.props.isAuthenticated,
+    currrentUser: this.props.user,
+    vendorID: this.props.vendor
+  };
+
+  onItemAdd = async () => {
+
+    if (this.state.isAuthenticated) {
+
+      const fetchedUser = await HttpGetUserByUsername(
+        this.state.currrentUser.username
+      );
+      console.log("Fetched User", fetchedUser)
+      let userCart = fetchedUser["cart"];
+      console.log("User Cart", userCart)
+      const newItem = {
+        itemName: this.props.itemName,
+        itemPrice: this.props.itemPrice,
+        itemDescription: this.props.itemDescription,
+        isVeg: this.props.isVeg
+      };
+
+      userCart.push(newItem)
+
+      const response = await HttpAddItemToCart(this.state.currrentUser.username, newItem)
+
+      // const newCart = [...userCart, newItem];
+      // console.log(newCart)
+      toast.success("Item Added to Cart!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } 
+    
+    else {
+      toast.error("Please login to add item to cart!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   render() {
     return (
       <Paper
@@ -54,7 +107,11 @@ class FoodItem extends Component {
                   <Button size="small"></Button>
                 </CardActions>
                 <Grid item>
-                  <Button size="small">Add</Button>
+                  <Button size="small" onClick={async() => {
+                    await this.onItemAdd()
+                  }}>
+                    Add
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
@@ -65,6 +122,7 @@ class FoodItem extends Component {
             </Grid>
           </Grid>
         </Grid>
+        <ToastContainer />
       </Paper>
     );
   }

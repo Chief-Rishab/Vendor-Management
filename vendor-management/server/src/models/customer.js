@@ -25,12 +25,12 @@ const CustomerSchema=new mongoose.Schema({
         type:[Object],
         default:[],
         required:false
+    },
+    cart:{
+        type:[Object],
+        default: [],
+        required: false
     }
-    // cart:{
-    //     type:[Object],
-    //     default: [],
-    //     required: false
-    // }
 });
 
 CustomerSchema.pre('save',function(next){
