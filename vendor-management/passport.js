@@ -15,6 +15,7 @@ const cookieExtractor=req=>{
 
 module.exports = function(passport){
 
+    // authorization 
     passport.use(new JwtStrategy({
         jwtFromRequest: cookieExtractor,
         secretOrKey: "SmartVMC"

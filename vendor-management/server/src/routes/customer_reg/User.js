@@ -6,6 +6,12 @@ const userDatabase = require('../../models/customer')
 const User = require('../../models/customer');
 const { HttpGetUserbyUsername, HttpGetUserCart, HttpAddItemToCart, HttpGetItemFromCart, HttpRemoveItemFromCart } = require('./user.controller')
 require('../../../../passport')(passport);
+const express=require('express');
+const userRouter=express.Router();
+const passport=require('passport');
+require('../../../../passport')(passport);       
+const JWT=require('jsonwebtoken');
+const User=require('../../models/customer'); 
 
 const signToken = userID => {
     return JWT.sign({
