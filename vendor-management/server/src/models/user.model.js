@@ -16,16 +16,24 @@ async function addItemToCart(username, data){
 
     // cart.push(itemToAdd)
     
-    const { item } = data
+    const {item} = data
+    const newItem = item['item']
+    const vendorID = item['vendorID']
+    console.log("Logging Vendor ID to insert", vendorID)
+    console.log("Logging item to insert", newItem)
     const response = await userDatabase.findOneAndUpdate({ username: username },
-        {
+        {  
+            $set: {
+                vendorID: mongoose.Types.ObjectId(vendorID)
+            },
+
             $push: {
-                cart: {
+                "cart.items" : {
                     itemID: new mongoose.Types.ObjectId(),
-                    itemName: item.itemName,
-                    itemDescription: item.itemDescription,
-                    itemPrice: item.itemPrice,
-                    isVeg: item.isVeg,
+                    itemName: newItem.itemName,
+                    itemDescription: newItem.itemDescription,
+                    itemPrice: newItem.itemPrice,
+                    isVeg: newItem.isVeg,
                 }
             },
         }, { new: true }
@@ -40,7 +48,7 @@ async function deleteItemFromCart(username, itemid){
     const response = await userDatabase.findOneAndUpdate({ username: username },
         {
             $pull: {
-                cart: {
+                "cart.items": {
                     itemID: mongoose.Types.ObjectId(itemid)
                 }
             }

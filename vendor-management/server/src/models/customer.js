@@ -27,7 +27,7 @@ const CustomerSchema=new mongoose.Schema({
         required:false
     },
     cart:{
-        type:[Object],
+        type: Object,
         default: [],
         required: false
     }

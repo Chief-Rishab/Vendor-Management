@@ -35,29 +35,76 @@ class FoodItem extends Component {
       );
       console.log("Fetched User", fetchedUser)
       let userCart = fetchedUser["cart"];
-      console.log("User Cart", userCart)
-      const newItem = {
-        itemName: this.props.itemName,
-        itemPrice: this.props.itemPrice,
-        itemDescription: this.props.itemDescription,
-        isVeg: this.props.isVeg
-      };
+      if(userCart['items'].length === 0){
 
-      userCart.push(newItem)
+        const newItem = {
+          itemName: this.props.itemName,
+          itemPrice: this.props.itemPrice,
+          itemDescription: this.props.itemDescription,
+          isVeg: this.props.isVeg
+        };
 
-      const response = await HttpAddItemToCart(this.state.currrentUser.username, newItem)
+        const passedData = {
+          item: newItem,
+          vendorID: this.state.vendorID
+        }
 
-      // const newCart = [...userCart, newItem];
-      // console.log(newCart)
-      toast.success("Item Added to Cart!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+        const response = await HttpAddItemToCart(this.state.currrentUser.username, passedData)
+        toast.success("Item Added to Cart!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+
+      else if(userCart.vendorID.toString() !== this.state.vendorID ){
+
+        toast.warn('Cannot add items from different vendors to cart!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+
+      }
+      else{
+
+        console.log("User Cart", userCart)
+        const newItem = {
+          itemName: this.props.itemName,
+          itemPrice: this.props.itemPrice,
+          itemDescription: this.props.itemDescription,
+          isVeg: this.props.isVeg
+        };
+  
+        // userCart.push(newItem)
+
+        const passedData = {
+          item: newItem,
+          vendorID: this.state.vendorID
+        }
+  
+        const response = await HttpAddItemToCart(this.state.currrentUser.username, passedData)
+  
+        // const newCart = [...userCart, newItem];
+        // console.log(newCart)
+        toast.success("Item Added to Cart!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } 
     
     else {

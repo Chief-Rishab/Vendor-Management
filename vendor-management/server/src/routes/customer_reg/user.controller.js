@@ -25,7 +25,7 @@ async function HttpGetItemFromCart(req, res){
 
     const username = req.params.username;
     let cart = await getCartByUsername(username)
-    cart = cart['cart'];
+    cart = cart['cart']['items'];
     let filtered = cart.filter(item => item.itemID.toString() == req.params.id)
     console.log(filtered)
     return res.send(filtered[0])

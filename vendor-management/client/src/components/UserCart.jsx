@@ -22,7 +22,7 @@ import { HttpGetUserByUsername, deleteItemFromCart } from "./../hooks/requests";
 import { useState, useEffect } from "react";
 
 function generate(items, element, user, setCart) {
-  return items.map((value) =>
+  return items['items'].map((value) =>
     React.cloneElement(element, {
       key: value.itemID,
       itemname: value.itemName,
