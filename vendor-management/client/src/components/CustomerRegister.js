@@ -1,9 +1,11 @@
 import React, {useState,useRef,useEffect} from 'react';
 import AuthService from '../services/customerAuthservice';
 import Message from './Message';
+import {useNavigate} from 'react-router-dom';
 // import {AuthContext} from '../Context/AuthContext_consumer';
 
 const Register = props=>{
+    const navigate=useNavigate();
     const [user,setUser] = useState({username: "", password : ""});
     const [message,setMessage] = useState(null);
     // const authContext = useContext(AuthContext);
@@ -31,7 +33,7 @@ const Register = props=>{
             resetForm();
             if(!message.msgError){ // if any error show the message to the user for 2seconds and then redirect to login page
                 timerID = setTimeout(()=>{
-                    props.history.push('/login');
+                    navigate('/login');
                 },2000)
             }
         });
