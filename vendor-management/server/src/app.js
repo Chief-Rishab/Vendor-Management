@@ -55,26 +55,6 @@ app.post('/webhook', express.json({type: 'application/json'}), (req, res) => {
 app.use('/vendor/auth', vendorAuthRouter);
 app.use('/vendors' ,vendorsRouter)
 
-// const customer= require('./models/customer');
-
-// //testing with dummy user data for customer
-// const custInput ={
-//     CustomerName:'Rishab Jain',
-//     password:'1234567',
-//     phone:873147234,
-//     email: 'rockstar@gmail.com'
-// }
-
-// const User1=new customer(custInput);
-// User1.save((err,document)=>{
-//     if(err)
-//         console.log(err);
-//     console.log(document);
-// });
-
 app.use('/customer',CustomerUserRouter);
-
-
-
 
 module.exports = app;

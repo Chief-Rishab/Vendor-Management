@@ -1,24 +1,11 @@
-/*import React from 'react'
-
-const Login = () => {
-    return (
-        <div>
-            <p>Welcome</p>
-            <h1>This is login page</h1>
-        </div>
-    )
-}
-
-export default Login;
-
-*/
-
 import React, {useState,useContext} from 'react';
 import AuthService from '../services/customerAuthservice';
 import Message from '../components/Message';
 import {AuthContext} from '../Context/AuthContext_consumer';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Login = props=>{
+    const navigate=useNavigate();
     const [user,setUser] = useState({username: "", password : ""});
     const [message,setMessage] = useState(null);
     const authContext = useContext(AuthContext);
@@ -35,7 +22,7 @@ const Login = props=>{
             if(isAuthenticated){
                 authContext.setUser(user);
                 authContext.setIsAuthenticated(isAuthenticated);
-                props.history.push('/home');
+                navigate('/home');
             }
             else
                 setMessage(message);
