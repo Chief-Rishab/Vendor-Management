@@ -4,7 +4,12 @@ const passport = require('passport');
 const JWT = require('jsonwebtoken');
 const userDatabase = require('../../models/customer')
 const User = require('../../models/customer');
-const { HttpGetUserbyUsername, HttpGetUserCart, HttpAddItemToCart, HttpGetItemFromCart, HttpRemoveItemFromCart } = require('./user.controller')
+const { HttpGetUserbyUsername,
+    HttpGetUserCart,
+    HttpAddItemToCart,
+    HttpGetItemFromCart,
+    HttpRemoveItemFromCart,
+    HttpPlaceOrder } = require('./user.controller')
 require('../../../../passport')(passport);
 
 const signToken = userID => {
@@ -54,6 +59,8 @@ userRouter.post('/login', passport.authenticate('local', { session: false }), (r
 
 
 userRouter.post('/:username/cart', HttpAddItemToCart)
+// userRouter.post('/:username/cart/create-checkout-session', HttpInitiateCheckout)
+userRouter.post('/:username/cart/order', HttpPlaceOrder)
 
 
 // logout route

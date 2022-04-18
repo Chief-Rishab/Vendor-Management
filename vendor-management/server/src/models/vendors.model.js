@@ -1,19 +1,6 @@
 const vendorsDatabase = require('./vendors.mongo')
 const mongoose = require('mongoose')
 
-const vendor_1 = {
-
-    outletName: "Poison",
-    ownerName: "Garvit",
-    phoneNo: "1234567890",
-    email: "zeher@gmail.com",
-    password: "123456",
-    gstNo: "asdfsadfas",
-    address: "Hell",
-    rating: 0,
-    orderList: [],
-    menu: []
-}
 
 async function addVendor(vendor){
 
@@ -24,7 +11,6 @@ async function addVendor(vendor){
     })
 }
 
-addVendor(vendor_1);
 
 async function getVendors() {
 
@@ -34,11 +20,31 @@ async function getVendors() {
 
 async function getVendorByID(vendorID){
 
+
     console.log(mongoose.Types.ObjectId.isValid(vendorID));
     return await vendorsDatabase.findById(vendorID)
+}
+
+async function addOrderToVendor(vendorID, order, customerID){
+
+    const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID}, {
+        $push: {
+            "orderList": {
+                customerID: customerID,
+                orderID: order.orderID,
+                items: order['items'],
+                orderStatus: "In-Progress",
+                totalAmount: order.totalAmount,
+            }
+        }
+    }).clone();
+    
+
+    return response;
 }
 
 module.exports = {
     getVendors,
     getVendorByID,
+    addOrderToVendor,
 }
