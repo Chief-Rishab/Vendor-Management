@@ -41,7 +41,8 @@ class FoodItem extends Component {
           itemName: this.props.itemName,
           itemPrice: this.props.itemPrice,
           itemDescription: this.props.itemDescription,
-          isVeg: this.props.isVeg
+          isVeg: this.props.isVeg,
+          image: this.props.image
         };
 
         const passedData = {
@@ -81,7 +82,8 @@ class FoodItem extends Component {
           itemName: this.props.itemName,
           itemPrice: this.props.itemPrice,
           itemDescription: this.props.itemDescription,
-          isVeg: this.props.isVeg
+          isVeg: this.props.isVeg,
+          image: this.props.image
         };
   
         // userCart.push(newItem)
@@ -126,7 +128,7 @@ class FoodItem extends Component {
         sx={{
           p: 2,
           margin: "auto",
-          maxWidth: 300,
+          maxWidth: 500,
           flexGrow: 1,
           backgroundColor: (theme) =>
             theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -157,7 +159,7 @@ class FoodItem extends Component {
                   <Button size="small" onClick={async() => {
                     await this.onItemAdd()
                   }}>
-                    Add
+                    Add to Cart
                   </Button>
                 </Grid>
               </Grid>
