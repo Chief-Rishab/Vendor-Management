@@ -42,6 +42,12 @@ button{
   color: white !important;
 }
 
+btn1{
+font-variant: initial;
+font-weight: 300;
+color: white !important;
+}
+
 select{
   box-shadow: none !important;
   border-color: black;
