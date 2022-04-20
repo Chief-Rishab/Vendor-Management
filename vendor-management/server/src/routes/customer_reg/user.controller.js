@@ -2,8 +2,8 @@ const { getUserbyUsername,
     addItemToCart,
     getCartByUsername,
     deleteItemFromCart,
-    createLineItems,
-    placeOrder } = require('../../models/user.model')
+    placeOrder,
+    getCustomerOrders } = require('../../models/user.model')
 
 async function HttpGetUserbyUsername(req, res) {
     const userName = req.params.username
@@ -46,25 +46,22 @@ async function HttpRemoveItemFromCart(req, res) {
     res.send(response)
 }
 
-// async function HttpInitiateCheckout(req, res) {
-
-//     const data = req.body;
-//     const line_items = await createLineItems(data['cart'])
-//     const session = await stripe.checkout.sessions.create({
-//         line_items: line_items,
-//         mode: 'payment',
-//         payment_method_types: ['card'],
-//         success_url: `http://localhost:8000/success`,
-//         cancel_url: `http://localhost:8000/?canceled=true`,
-//       });
-//       res.json({url: session.url}) 
-// }
-
 async function HttpPlaceOrder(req, res){
 
     const {token, amount, cart, user} = req.body;
     placeOrder(token, amount, cart, user);
 
+}
+
+async function HttpGetCustomerOrders(req, res){
+
+    const username = req.params.username;
+    console.log("Username", username);
+    const response = await getCustomerOrders(username).then((response) => {
+        return response;
+    })
+
+    res.send(response);
 }
 
 
@@ -74,5 +71,6 @@ module.exports = {
     HttpAddItemToCart,
     HttpRemoveItemFromCart,
     HttpGetItemFromCart,
-    HttpPlaceOrder
+    HttpPlaceOrder,
+    HttpGetCustomerOrders
 }

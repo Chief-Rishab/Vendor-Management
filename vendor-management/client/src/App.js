@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import Error from './components/Error';
 import NewVendorList from './components/vendorsList';
 import UserCart from './components/UserCart';
+import UserOrder from './components/UserOrder';
 import VendorListing from './components/vendorListing';
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 import CustomerRegister from './components/CustomerRegister';
@@ -45,6 +46,10 @@ const App =()=> {
             
             <Route element={<PrivateRoute/>}>
                  <Route path="/Cart" element={<UserCart/>}/> 
+            </Route>
+
+            <Route element={<PrivateRoute/>}>
+                 <Route path="/Orders" element={<UserOrder/>}/> 
             </Route>
 
             {/* show error page if route doesnt match with anything */}

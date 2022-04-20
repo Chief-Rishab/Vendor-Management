@@ -9,7 +9,8 @@ const { HttpGetUserbyUsername,
     HttpAddItemToCart,
     HttpGetItemFromCart,
     HttpRemoveItemFromCart,
-    HttpPlaceOrder } = require('./user.controller')
+    HttpPlaceOrder,
+    HttpGetCustomerOrders } = require('./user.controller')
 require('../../../../passport')(passport);
 
 const signToken = userID => {
@@ -61,6 +62,7 @@ userRouter.post('/login', passport.authenticate('local', { session: false }), (r
 userRouter.post('/:username/cart', HttpAddItemToCart)
 // userRouter.post('/:username/cart/create-checkout-session', HttpInitiateCheckout)
 userRouter.post('/:username/cart/order', HttpPlaceOrder)
+userRouter.get('/:username/orders', HttpGetCustomerOrders)
 
 
 // logout route

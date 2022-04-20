@@ -112,7 +112,7 @@ const UserCart = () => {
             </ListItem>
           )}
         </Demo>
-        {currentCart.length >= 1 && <Checkout
+        {<Checkout
           amount = {calculateTotalAmount()}
           cart = {currentCart}
           user = {user}/>}

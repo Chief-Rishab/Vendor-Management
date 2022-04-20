@@ -55,9 +55,19 @@ async function deleteItemFromCart(username, itemID){
     return response    
 }
 
+async function getCustomerOrders(username){
+
+    let userEndpoint = userURL(username)
+    userEndpoint = userEndpoint + `/orders`
+    const response = await axios.get(userEndpoint);
+    console.log("Get Customer Function");
+    return response;
+}
+
 export {
     httpGetVendors,
     HttpGetUserByUsername,
     HttpAddItemToCart,
-    deleteItemFromCart
+    deleteItemFromCart,
+    getCustomerOrders
 }

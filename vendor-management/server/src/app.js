@@ -54,7 +54,6 @@ app.post('/webhook', express.json({type: 'application/json'}), (req, res) => {
 
 app.use('/vendor/auth', vendorAuthRouter);
 app.use('/vendors' ,vendorsRouter)
-
 app.use('/customer',CustomerUserRouter);
 
 module.exports = app;

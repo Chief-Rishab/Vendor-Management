@@ -1,8 +1,8 @@
 const { default: mongoose } = require('mongoose')
 const userDatabase = require('./customer')
 const stripe = require('stripe')('sk_test_51KpRU9SBeIeQYzIiqAVHThiuqtKV2kLZy1SLEeMSvyMIKsygSVZceHYlVATY42okNzWxujSaojdRnVShu6Hhu08w00rcRDKFZH');
-const {v4: uuidv4} = require('uuid');
-const {addOrderToVendor} = require('./vendors.model')
+const { v4: uuidv4 } = require('uuid');
+const { addOrderToVendor } = require('./vendors.model')
 async function getUserbyUsername(username) {
 
     return await userDatabase.findOne({ username: username })
@@ -59,72 +59,41 @@ async function deleteItemFromCart(username, itemid) {
     return response;
 }
 
-async function createLineItems(cart) {
-
-    const items = cart['items']
-    let products = []
-    let prices = []
-    let line_items = []
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i]
-        const product = await stripe.products.create({
-            name: item.itemName,
-            metadata: {
-                quantity: parseInt(1),
-                price: parseInt(item.itemPrice)*100
-            }
-        });
-
-        products.push(product)
-    }
-
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i]
-        const price = await stripe.prices.create({
-
-            unit_amount: product.metadata.price,
-            currency: 'inr',
-            product: product["id"],
-            metadata: { quantity: product.metadata.quantity }
-        })
-
-        prices.push(price)
-    }
-
-    prices.forEach((price) => {
-        const line_item = {
-            price: price.id,
-            quantity: parseInt( price.metadata.quantity), 
-        }
-        line_items.push(line_item)
-    })
-
-    console.log(line_items)
-    return line_items
-
-}
-
-async function placeOrder(token, amount, cart, user){
+async function placeOrder(token, amount, cart, user) {
 
     const customer = await stripe.customers.create({
         email: token.email,
         source: token.id,
     })
 
-    console.log("Cusomter Logged");
-
-    const payment = await stripe.paymentIntents.create({
-        amount: amount*100,
-        currency: 'inr',
-        customer: customer.id,
-        receipt_email: token.email
-    },
-    {
-        idempotencyKey: uuidv4()
+    const payment_method = await stripe.paymentMethods.create({
+        type: 'card',
+        card: {
+            number: '378282246310005',
+            exp_month: 4,
+            exp_year: 2024,
+            cvc: '314',
+        },
     })
 
+    const payment = await stripe.paymentIntents.create({
+        amount: amount * 100,
+        currency: 'inr',
+        customer: customer.id,
+        receipt_email: token.email,
+        payment_method: payment_method["id"],
 
-    if(payment){
+    },
+        {
+            idempotencyKey: uuidv4()
+        })
+
+
+    if (payment) {
+
+        const paymentIntent = await stripe.paymentIntents.confirm(
+            payment["id"],
+        );
 
         //* Add new order to customer orders
 
@@ -136,10 +105,10 @@ async function placeOrder(token, amount, cart, user){
             vendorID: cart.vendorID,
             items: cart['items'],
             orderStatus: "In-Progress",
-            totalAmount: amount*100
+            totalAmount: amount * 100
         }
 
-        console.log(order)
+
 
         let response = await userDatabase.findOneAndUpdate({ username: user.username },
             {
@@ -157,21 +126,28 @@ async function placeOrder(token, amount, cart, user){
         // //* Delete items from cart
         const customerID = response["_id"].toString()
 
-        response = await userDatabase.findOneAndUpdate({username: user.username}, {
+        response = await userDatabase.findOneAndUpdate({ username: user.username }, {
             $set: {
                 "cart.items": []
             }
         }, { new: true }).clone()
 
         // //* Add order vendor side
-        
+
         response = await addOrderToVendor(cart.vendorID, order, customerID);
 
         return response;
     }
-    else{
+    else {
         console.log("Payment Failed")
     }
+}
+
+async function getCustomerOrders(username){
+
+    const response = await userDatabase.findOne({username: username}).clone();
+    console.log(response);
+    return response["orderList"];
 }
 
 module.exports = {
@@ -179,6 +155,6 @@ module.exports = {
     addItemToCart,
     getCartByUsername,
     deleteItemFromCart,
-    createLineItems,
-    placeOrder
+    placeOrder,
+    getCustomerOrders
 }
