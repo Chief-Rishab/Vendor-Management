@@ -32,12 +32,12 @@ const Navbar = props =>{
                 </Link>  
                 <Link to="/Signup">
                     <li className="nav-item nav-link">
-                        Register
+                        SignUp
                     </li>
                 </Link>  
                 <Link to="/vendors">
                     <li className="nav-item nav-link">
-                        Vendor List
+                        Food Outlets
                     </li>
                 </Link>
             </>
@@ -64,7 +64,7 @@ const Navbar = props =>{
                 </Link>
                 <Link to="/Vendors">
                     <li className="nav-item nav-link">
-                        Restaurants
+                    Food Outlets
                     </li>
                 </Link>      
                 {/* {
@@ -75,9 +75,9 @@ const Navbar = props =>{
                         </li>
                     </Link> : null
                 }   */}
-                <button type="button" 
+                <btn1 type="button" 
                         className="btn btn-link nav-item nav-link" 
-                        onClick={onClickLogoutHandler}>Logout</button>
+                        onClick={onClickLogoutHandler}>Logout</btn1>
             </>
         )
     }

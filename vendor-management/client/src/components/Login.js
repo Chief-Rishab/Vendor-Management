@@ -31,24 +31,32 @@ const Login = props=>{
 
     return(
         <div>
+            <div className="row justify-content-center">
+                <div className="col-md-10 mt-4 text-left">
             <form onSubmit={onSubmit}>
-                <h3>Please sign in</h3>
-                <label htmlFor="username" className="sr-only">Username: </label>
+            
+                <h2 className="m-3" style={{fontSize:'25px'}}>Customer Login</h2>
                 <input type="text" 
                        name="username" 
                        onChange={onChange} 
                        className="form-control" 
                        placeholder="Enter Username"/>
-                <label htmlFor="password" className="sr-only">Password: </label>
                 <input type="password" 
                        name="password" 
                        onChange={onChange} 
                        className="form-control" 
                        placeholder="Enter Password"/>
-                <button className="btn btn-lg btn-primary btn-block" 
-                        type="submit">Log in </button>
+                <br/>
+                <button className="btn btn-primary btn-block" 
+                        type="submit">Enter</button>
+            <br/>
+            <br />
+            <a style={{ color: 'black' }} href='/signup' className="mt-2"> New Here? Click here to register</a>
+                    <br />
+            {message ? <Message message={message} /> : null}
             </form>
-            {message ? <Message message={message}/> : null}
+        </div>
+        </div>
         </div>
     )
 }

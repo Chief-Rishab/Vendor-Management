@@ -23,3 +23,46 @@ code {
   font-size: xx-large;
   font-weight: 1000;
 }
+
+.flex-container{
+  display: flex !important;
+}
+
+.flex-item {
+  justify-content: center;
+}
+
+input{
+  margin-top: 10px !important;
+  box-shadow: none !important;
+}
+
+button{
+  background-color: red !important;
+  color: white !important;
+}
+
+btn1{
+font-variant: initial;
+font-weight: 300;
+color: white !important;
+}
+
+select{
+  box-shadow: none !important;
+  border-color: black;
+}
+
+.fa-plus{
+  color: green;
+  margin: 5px;
+}
+
+.fa-minus{
+  color: red !important;
+  margin: 5px;
+}
+
+.fa-trash{
+  color: red;
+}
