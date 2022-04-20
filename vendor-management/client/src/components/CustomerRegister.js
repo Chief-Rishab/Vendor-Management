@@ -3,12 +3,13 @@ import AuthService from '../services/customerAuthservice';
 import Message from './Message';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './styles.module.css'
+import mongoose from 'mongoose';
 // import {AuthContext} from '../Context/AuthContext_consumer';
 
 
 export default function Register(){
     const navigate = useNavigate();
-    const [user, setUser] = useState({ username: "", password: "", phoneNo: "", email: "", address: "", cart: [Object], orderList: [Object] });
+    const [user, setUser] = useState({ username: "", password: "", phoneNo: "", email: "", address: "", cart: {vendorID: new mongoose.Types.ObjectId(), items: []}, orderList: [{}] });
     const [message, setMessage] = useState(null);
     let timerID = useRef(null);
 
@@ -23,7 +24,7 @@ export default function Register(){
     }
 
     const resetForm = () => {
-        setUser({ username: "", password: "", phoneNo: "", email: "", address: ""});
+        setUser({ username: "", password: "", phoneNo: "", email: "", address: "", cart: [{}], orderList: [{}]});
     }
 
     const onSubmit = e => {
