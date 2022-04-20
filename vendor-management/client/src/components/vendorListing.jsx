@@ -75,6 +75,7 @@ const VendorListing = () => {
               itemDescription={item.itemDescription}
               itemPrice={item.itemPrice}
               isVeg={item.isVeg}
+              image={item.image}
               isAuthenticated = {isAuthenticated}
               user = {user}
               vendor = {id}

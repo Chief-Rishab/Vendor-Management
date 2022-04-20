@@ -36,6 +36,7 @@ async function addItemToCart(username, data) {
                     itemDescription: newItem.itemDescription,
                     itemPrice: newItem.itemPrice,
                     isVeg: newItem.isVeg,
+                    image: newItem.image
                 }
             },
         }, { new: true }
