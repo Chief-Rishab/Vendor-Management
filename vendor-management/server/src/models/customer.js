@@ -11,15 +11,15 @@ const CustomerSchema=new mongoose.Schema({
     },
     phoneNo:{
         type: String,
-        required:false
+        required:true
     },
     email:{
         type:String,
-        required:false
+        required:true
     },
     address:{
         type: String,
-        required: false
+        required: true
     },
     orderList:{
         type:[Object],

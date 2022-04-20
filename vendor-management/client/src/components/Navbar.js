@@ -82,12 +82,12 @@ const Navbar = props =>{
         )
     }
     return(
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg shadow-lg p-3 mb-5 bg-white rounded">
             <Link to="/">
                 <div className="navbar-brand">SmartVMC</div>
             </Link>
             <div className="collapse navbar-collapse" id="navbarText">
-                <ul className="navbar-nav mr-auto">
+                <ul className="navbar-nav ms-auto">
                     {
                     !isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
                 </ul>

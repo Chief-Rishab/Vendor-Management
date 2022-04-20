@@ -1,14 +1,14 @@
 import React, {useState,useRef,useEffect} from 'react';
 import AuthService from '../services/customerAuthservice';
 import Message from './Message';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
+import styles from './styles.module.css'
 // import {AuthContext} from '../Context/AuthContext_consumer';
 
 const Register = props=>{
     const navigate=useNavigate();
-    const [user,setUser] = useState({username: "", password : ""});
+    const [user,setUser] = useState({username: "", password : "", phone:"", email:"", address:""});
     const [message,setMessage] = useState(null);
-    // const authContext = useContext(AuthContext);
     let timerID=useRef(null);
 
     useEffect(()=>{
@@ -22,7 +22,7 @@ const Register = props=>{
     }
 
     const resetForm = ()=>{
-        setUser({username : "", password : ""});
+        setUser({username : "", password : "", phone:"", email:"", address:""});
     }
 
     const onSubmit = e =>{
@@ -43,20 +43,41 @@ const Register = props=>{
              <div>
             <form onSubmit={onSubmit}>
                 <h3>Please Register</h3>
-                <label htmlFor="username" className="sr-only">Username: </label>
+                <strong htmlFor="username" className="sr-only">Username: </strong>
                 <input type="text" 
                        name="username" 
                        value={user.username}
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter Username"/>
-                <label htmlFor="password" className="sr-only">Password: </label>
+                <strong htmlFor="password" className="sr-only">Password: </strong>
                 <input type="password" 
                        name="password"
                        value={user.password} 
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter Password"/>
+                <strong htmlFor="phone" className="sr-only">Phone: </strong>
+                <input type="number" 
+                       name="phoneNo"
+                       value={user.phoneNo} 
+                       onChange={onChange} 
+                       className="styles-input" 
+                       placeholder="Enter Phone Number"/>
+                 <strong htmlFor="Email" className="sr-only">Email Id: </strong>
+                <input type="text" 
+                       name="email"
+                       value={user.email} 
+                       onChange={onChange} 
+                       className="styles-input" 
+                       placeholder="Enter the mail id"/>
+                <strong htmlFor="Address" className="sr-only">Address: </strong>
+                <input type="text" 
+                       name="address"
+                       value={user.address} 
+                       onChange={onChange} 
+                       className="styles-input" 
+                       placeholder="Enter the permanent address"/>
                 {/* <label htmlFor="role" className="sr-only">Role: </label>
                 <input type="text" 
                        name="role"
@@ -64,9 +85,16 @@ const Register = props=>{
                        onChange={onChange} 
                        className="form-control" 
                        placeholder="Enter role (admin/user)"/> */}
-                <button className="btn btn-lg btn-primary btn-block" 
+                <button className="btn btn-primary btn-block" 
                         type="submit">Register</button>
             </form>
+            <h3>Or Already registered?</h3>
+            <h11>Click Here to Sign In!  </h11>
+            <Link to="/login">
+                <button type="button" className="btn btn-primary btn-block">
+                    Sign in
+                </button>
+            </Link>
             {message ? <Message message={message}/> : null}
         </div>
     )

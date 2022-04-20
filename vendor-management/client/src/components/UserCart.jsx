@@ -26,6 +26,7 @@ function generate(items, element, user, setCart) {
       key: value.itemID,
       itemname: value.itemName,
       itemprice: value.itemPrice,
+      image: value.image,
       itemID: value.itemID,
       user: user,
       setCart: setCart,
