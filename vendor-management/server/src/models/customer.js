@@ -28,7 +28,7 @@ const CustomerSchema=new mongoose.Schema({
     },
     cart:{
         type: Object,
-        default: [],
+        default: {items: [], vendorID: ""},
         required: false
     }
 });

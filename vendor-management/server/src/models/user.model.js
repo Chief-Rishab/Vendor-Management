@@ -26,7 +26,7 @@ async function addItemToCart(username, data) {
     const response = await userDatabase.findOneAndUpdate({ username: username },
         {
             $set: {
-                vendorID: mongoose.Types.ObjectId(vendorID)
+                "cart.vendorID": vendorID
             },
 
             $push: {
