@@ -31,23 +31,11 @@ userRouter.post('/register', (req, res) => {
         {
             res.status(400).json({ message: { msgBody: "Username has already been taken", msgError: true } });
         }
-        else if(password.lenght !== 8)
-        {
-            res.status(401).json({ message: { msgBody: "Password should atleast be of length 8", msgError: true } });
-        }
-        // else if(body('username').isEmail())
-        // {
-            
-        // }
-        else if(phoneNo.length!==10)
-        {
-            res.status(401).json({ message: { msgBody: "Enter a 10 digit phone number", msgError: true } });
-        }
         else {
             const newUser = new User({ username, password, phoneNo, address, email, cart, orderList });
             newUser.save(err => {
                 if (err)
-                    res.status(500).json({ message: { msgBody: "Error Has Occured", msgError: true } });
+                    res.status(500).json({ message: { msgBody: "All fields are mandotory", msgError: true } });
                 else
                     res.status(201).json({ message: { msgBody: "Account Successfully Created", msgError: false } });
             })
