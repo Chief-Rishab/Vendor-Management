@@ -30,6 +30,18 @@ userRouter.post('/register', (req, res) => {
         {
             res.status(400).json({ message: { msgBody: "Username has already been taken", msgError: true } });
         }
+        else if(password.lenght !== 8)
+        {
+            res.status(401).json({ message: { msgBody: "Password should atleast be of length 8", msgError: true } });
+        }
+        // else if(body('username').isEmail())
+        // {
+            
+        // }
+        else if(phoneNo.length!==10)
+        {
+            res.status(401).json({ message: { msgBody: "Enter a 10 digit phone number", msgError: true } });
+        }
         else {
             const newUser = new User({ username, password, phoneNo, address, email, cart, orderList });
             newUser.save(err => {
@@ -57,6 +69,18 @@ userRouter.post('/login', passport.authenticate('local', { session: false }), (r
     }
 });
 
+// userRouter.post('/login', passport.authenticate('local', { session: false }), (req, res) => {
+//         if (req.isAuthenticated()) {
+//             const { _id, username } = req.user;
+//             const token = signToken(_id);
+//             res.cookie('access_token', token, { httpOnly: true, sameSite: true });      
+//            res.status(200).json({ isAuthenticated: true, user: { username } });
+//           }
+//         else{
+//             res.status(401).json({ message: { msgBody: "Login not successful", msgError: true }});
+//             //res.status(401).json({message: "Login not successful",msgError: true});
+//         }
+//   });
 
 userRouter.post('/:username/cart', HttpAddItemToCart)
 // userRouter.post('/:username/cart/create-checkout-session', HttpInitiateCheckout)

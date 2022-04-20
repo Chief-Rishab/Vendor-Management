@@ -2,6 +2,7 @@ import React, {useState,useRef,useEffect} from 'react';
 import AuthService from '../services/customerAuthservice';
 import Message from './Message';
 import {useNavigate, Link} from 'react-router-dom';
+import styles from './styles.module.css'
 // import {AuthContext} from '../Context/AuthContext_consumer';
 
 const Register = props=>{
@@ -42,40 +43,40 @@ const Register = props=>{
              <div>
             <form onSubmit={onSubmit}>
                 <h3>Please Register</h3>
-                <label htmlFor="username" className="sr-only">Username: </label>
+                <strong htmlFor="username" className="sr-only">Username: </strong>
                 <input type="text" 
                        name="username" 
                        value={user.username}
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter Username"/>
-                <label htmlFor="password" className="sr-only">Password: </label>
+                <strong htmlFor="password" className="sr-only">Password: </strong>
                 <input type="password" 
                        name="password"
                        value={user.password} 
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter Password"/>
-                <label htmlFor="phone" className="sr-only">Phone: </label>
+                <strong htmlFor="phone" className="sr-only">Phone: </strong>
                 <input type="number" 
                        name="phoneNo"
                        value={user.phoneNo} 
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter Phone Number"/>
-                 <label htmlFor="Email" className="sr-only">Email Id: </label>
+                 <strong htmlFor="Email" className="sr-only">Email Id: </strong>
                 <input type="text" 
                        name="email"
                        value={user.email} 
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter the mail id"/>
-                <label htmlFor="Address" className="sr-only">Address: </label>
+                <strong htmlFor="Address" className="sr-only">Address: </strong>
                 <input type="text" 
                        name="address"
                        value={user.address} 
                        onChange={onChange} 
-                       className="form-control" 
+                       className="styles-input" 
                        placeholder="Enter the permanent address"/>
                 {/* <label htmlFor="role" className="sr-only">Role: </label>
                 <input type="text" 
@@ -88,7 +89,7 @@ const Register = props=>{
                         type="submit">Register</button>
             </form>
             <h3>Or Already registered?</h3>
-            <h11>Click Here to Sign In!</h11>
+            <h11>Click Here to Sign In!  </h11>
             <Link to="/login">
                 <button type="button" className="btn btn-primary btn-block">
                     Sign in
