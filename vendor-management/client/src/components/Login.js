@@ -39,11 +39,13 @@ const Login = props=>{
                 <input type="text" 
                        name="username" 
                        onChange={onChange} 
+                       required
                        className="form-control" 
                        placeholder="Enter Username"/>
                 <input type="password" 
                        name="password" 
                        onChange={onChange} 
+                       required
                        className="form-control" 
                        placeholder="Enter Password"/>
                 <br/>
