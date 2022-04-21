@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 const Login = props=>{
     const navigate=useNavigate();
-    const [user,setUser] = useState({username: "", password : ""});
+    const [user,setUser] = useState({username: "", password : "",email:""});
     const [message,setMessage] = useState(null);
     const authContext = useContext(AuthContext);
 
@@ -41,7 +41,7 @@ const Login = props=>{
                        onChange={onChange} 
                        required
                        className="form-control" 
-                       placeholder="Enter Username"/>
+                       placeholder="Enter the Email Id"/>
                 <input type="password" 
                        name="password" 
                        onChange={onChange} 

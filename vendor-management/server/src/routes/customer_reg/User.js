@@ -46,7 +46,7 @@ userRouter.post('/register', (req, res) => {
 //login route
 userRouter.post('/login', passport.authenticate('local', { session: false }), (req, res) => {
     if (req.isAuthenticated()) {
-        const { _id, username } = req.user;
+        const { _id, username, email} = req.user;
         const token = signToken(_id);
         res.cookie('access_token', token, { httpOnly: true, sameSite: true });
         /* httpOnly will make sure that this token cant be changed from the client side using javascript 
@@ -54,7 +54,7 @@ userRouter.post('/login', passport.authenticate('local', { session: false }), (r
         SameSite prevents from cross-site forgery attacks
         Thus important for security by ensuring JWT token is not stolen
         */
-        res.status(200).json({ isAuthenticated: true, user: { username } });
+        res.status(200).json({ isAuthenticated: true, user: { username, email } });
     }
 });
 
@@ -82,7 +82,7 @@ userRouter.get('/logout', passport.authenticate('jwt', { session: false }), (req
     //if(req.isAuthenticated())
     res.clearCookie('access_token');
     //console.log('access_token');
-    res.json({ user: { username: "" }, success: true });
+    res.json({ user: { username: "",email:"" }, success: true });
 });
 
 //incase you want to write roles add a vendor route here
@@ -90,8 +90,8 @@ userRouter.get('/logout', passport.authenticate('jwt', { session: false }), (req
 
 //to keep user signed in in case he closes the app but didnt logged out
 userRouter.get('/authenticated', passport.authenticate('jwt', { session: false }), (req, res) => {
-    const { username } = req.user;
-    res.status(200).json({ isAuthenticated: true, user: { username } });
+    const { username,email } = req.user;
+    res.status(200).json({ isAuthenticated: true, user: { username,email } });
 });
 module.exports = userRouter;
 

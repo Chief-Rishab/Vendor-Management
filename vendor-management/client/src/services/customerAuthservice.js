@@ -35,6 +35,6 @@ export default{
             return res.json().then(data => data);
 
         else
-            return { isAuthenticated: false, user: { username: "" } };
+            return { isAuthenticated: false, user: { username: "", email:""} };
     }
 }
