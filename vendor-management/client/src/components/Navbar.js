@@ -24,7 +24,14 @@ const Navbar = props =>{
                     <li className="nav-item nav-link">
                         Home
                     </li>
-                </Link>  
+                </Link>
+
+                <Link to="/vendors">
+                    <li className="nav-item nav-link">
+                        Food Outlets
+                    </li>
+                </Link>
+
                 <Link to="/Login">
                     <li className="nav-item nav-link">
                         Login
@@ -32,12 +39,13 @@ const Navbar = props =>{
                 </Link>  
                 <Link to="/Signup">
                     <li className="nav-item nav-link">
-                        SignUp
+                        Register
                     </li>
                 </Link>  
-                <Link to="/vendors">
+
+                <Link to="/Contact">
                     <li className="nav-item nav-link">
-                        Food Outlets
+                        Contact Us
                     </li>
                 </Link>
             </>

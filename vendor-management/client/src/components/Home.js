@@ -18,10 +18,10 @@ const Home = props =>{
     }
 
     const authenticatedHome = ()=>{
-        console.log(user.username);
+        //console.log(user.email);
         return(
             <div>
-                 <h2 className="m-3" style={{fontSize:'25px'}}>Welcome {user.username}</h2>
+                 <h2 className="m-3" style={{fontSize:'25px'}}>Welcome {user.email}</h2>
                  <h2 className="m-3" style={{fontSize:'20px'}}>Great to see you back!!</h2>
             </div>
         )

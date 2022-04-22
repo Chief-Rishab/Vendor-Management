@@ -46,13 +46,23 @@ export default function Register(){
                 <div className="col-md-10 mt-5 text-left">
                     <form onSubmit={onSubmit}>
                         <h2 className="m-2" style={{fontSize:'25px'}}>Customer Registeration</h2>
+                        
+                        <input type="text"
+                            name="email"
+                            value={user.email}
+                            onChange={onChange}
+                            required
+                            className="form-control"
+                            placeholder="Enter your full name" />
+                        
                         <input type="text"
                             name="username"
                             value={user.username}
                             onChange={onChange}
                             required
                             className="form-control"
-                            placeholder="Enter Username" />
+                            placeholder="Enter your Email id " />
+                            
                         <input type="password"
                             name="password"
                             value={user.password}
@@ -67,13 +77,6 @@ export default function Register(){
                             required
                             className="form-control"
                             placeholder="Enter Phone Number"/>
-                        <input type="text"
-                            name="email"
-                            value={user.email}
-                            onChange={onChange}
-                            required
-                            className="form-control"
-                            placeholder="Enter the mail id" />
                         <input type="text"
                             name="address"
                             value={user.address}
