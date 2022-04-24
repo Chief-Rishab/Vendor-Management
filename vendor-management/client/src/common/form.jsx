@@ -85,7 +85,7 @@ const Form = () => {
 
     if (searchText)
       filtered = vendors.filter((v) =>
-        v.outletName.toLowerCase().includes(searchText.toLowerCase())
+        v.outletName.toLowerCase().includes(searchText.toLowerCase()) || v.address.toLowerCase().includes(searchText.toLowerCase())
       );
 
     return filtered;

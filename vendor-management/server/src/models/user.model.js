@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose')
 const userDatabase = require('./customer')
 const stripe = require('stripe')('sk_test_51KpRU9SBeIeQYzIiqAVHThiuqtKV2kLZy1SLEeMSvyMIKsygSVZceHYlVATY42okNzWxujSaojdRnVShu6Hhu08w00rcRDKFZH');
 const { v4: uuidv4 } = require('uuid');
-const { addOrderToVendor } = require('./vendors.model')
+const { addOrderToVendor, getVendorByID } = require('./vendors.model')
 async function getUserbyUsername(username) {
 
     return await userDatabase.findOne({ username: username })
@@ -109,6 +109,8 @@ async function placeOrder(token, amount, cart, user) {
             totalAmount: amount * 100
         }
 
+        let vendor = await getVendorByID(cart.vendorID)
+
 
 
         let response = await userDatabase.findOneAndUpdate({ username: user.username },
@@ -117,9 +119,11 @@ async function placeOrder(token, amount, cart, user) {
                     "orderList": {
                         orderID: orderID,
                         vendorID: cart.vendorID,
+                        vendor: vendor.outletName,
                         items: cart['items'],
                         orderStatus: "In-Progress",
-                        totalAmount: amount
+                        totalAmount: amount,
+                        date: new Date()
                     }
                 }
             }, { new: true }).clone()

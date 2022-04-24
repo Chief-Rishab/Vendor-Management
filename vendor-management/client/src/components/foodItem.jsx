@@ -52,7 +52,7 @@ class FoodItem extends Component {
 
         const response = await HttpAddItemToCart(this.state.currrentUser.username, passedData)
         toast.success("Item Added to Cart!", {
-          position: "top-right",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -65,7 +65,7 @@ class FoodItem extends Component {
       else if(userCart.vendorID.toString() !== this.state.vendorID ){
 
         toast.warn('Cannot add items from different vendors to cart!', {
-          position: "top-right",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -98,7 +98,7 @@ class FoodItem extends Component {
         // const newCart = [...userCart, newItem];
         // console.log(newCart)
         toast.success("Item Added to Cart!", {
-          position: "top-right",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -111,7 +111,7 @@ class FoodItem extends Component {
     
     else {
       toast.error("Please login to add item to cart!", {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

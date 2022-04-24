@@ -18,8 +18,8 @@ const Img = styled("img")({
 
 const NewVendor = ({ vendorID, name, location, rating , onSelect}) => {
   return (
-    <Box>
-      <Card container spacing={2} sx={{ mb: 2, maxWidth: 680 }}>
+    <Box center>
+      <Card container spacing={2} sx={{ mb: 2, maxWidth: 550 }}>
         <Grid item></Grid>
         <Img alt="image" src={require("./../imgs/cemetery.jpeg")} />
         <Grid item xs={12} sm container>

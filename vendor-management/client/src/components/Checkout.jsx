@@ -5,12 +5,13 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Fab from "@mui/material/Fab";
 
 
-export default function Checkout({ amount, cart, user }) {
+export default function Checkout({ amount, cart, user, changeCart }) {
 
 
   function tokenHandler(token) {
     console.log(token);
     placeOrder(token, amount, cart, user)
+    window.location.reload()
 
   }
   return (

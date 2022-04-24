@@ -113,10 +113,11 @@ const UserCart = () => {
             </ListItem>
           )}
         </Demo>
-        {<Checkout
+        {currentCart["items"].length >= 1 && <Checkout
           amount = {calculateTotalAmount()}
           cart = {currentCart}
-          user = {user}/>}
+          user = {user}/>
+          }
       </Grid>
     </div>
   );
