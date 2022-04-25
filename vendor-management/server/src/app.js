@@ -7,6 +7,7 @@ const mongoose = require("mongoose")
 const vendorAuthRouter = require('./routes/vendor_register/auth')
 const vendorsRouter = require('./routes/vendors/vendors.router')
 const CustomerUserRouter =require('./routes/customer_reg/User');
+const VendorUserRouter =require('./routes/vendor_reg/VendorUser');
 // require('./services/conn');
 dotenv.config({path: './config.env'})
 
@@ -55,5 +56,6 @@ app.post('/webhook', express.json({type: 'application/json'}), (req, res) => {
 app.use('/vendor/auth', vendorAuthRouter);
 app.use('/vendors' ,vendorsRouter)
 app.use('/customer',CustomerUserRouter);
+app.use('/vendor',VendorUserRouter);
 
 module.exports = app;

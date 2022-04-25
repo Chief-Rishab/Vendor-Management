@@ -37,7 +37,7 @@ const Navbar = props =>{
                         Login
                     </li>
                 </Link>  
-                <Link to="/Signup">
+                <Link to="/ChooseUser">
                     <li className="nav-item nav-link">
                         Register
                     </li>
