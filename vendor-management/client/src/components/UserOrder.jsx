@@ -168,7 +168,7 @@ export default function UserOrder() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {orderList && orderList.map((order) => (
+          {orderList && orderList.length >= 1 && orderList.map((order) => (
             <Row key={order.orderID} row={order} />
           ))}
         </TableBody>

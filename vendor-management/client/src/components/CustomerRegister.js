@@ -8,7 +8,7 @@ import styles from './styles.module.css'
 
 export default function Register(){
     const navigate = useNavigate();
-    const [user, setUser] = useState({ username: "", password: "", phoneNo: "", email: "", address: "",cart: {items: [], vendorID: ""}, orderList: [Object] });
+    const [user, setUser] = useState({ username: "", password: "", phoneNo: "", email: "", address: "",cart: {items: [], vendorID: ""}, orderList: [] });
     const [message, setMessage] = useState(null);
     let timerID = useRef(null);
 
