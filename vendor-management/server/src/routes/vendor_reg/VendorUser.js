@@ -3,6 +3,11 @@ const vendoruserRouter = express.Router();
 const passport = require('passport');
 const JWT = require('jsonwebtoken');
 const VendorUser = require('../../models/vendor');
+const { HttpGetVendorOrders,
+    HttpGetVendorMenu,
+    HttpAddItemToMenu,
+    HttpDeleteItemFromMenu,
+    HttpEditItemFromMenu } = require('../vendors/vendors.controller')
 require("../../../../passport2")(passport);
 
 /*
@@ -26,7 +31,7 @@ const signToken = userID => {
 }
 
 vendoruserRouter.post('/register', (req, res) => {
-    const { username="", outletName="Default",password="", phoneNo="", email="", address="",gst="",rating=0,orderList} = req.body;
+    const { username = "", outletName = "Default", password = "", phoneNo = "", email = "", address = "", gst = "", rating = 0, orderList } = req.body;
     //  console.log(req.body);
     VendorUser.findOne({ username }, (err, user) => {
         if (err)
@@ -36,7 +41,7 @@ vendoruserRouter.post('/register', (req, res) => {
             res.status(400).json({ message: { msgBody: "Username has already been taken", msgError: true } });
         }
         else {
-            const newUser = new VendorUser({ username,outletName,password,phoneNo, email, address,gst,rating,orderList});
+            const newUser = new VendorUser({ username, outletName, password, phoneNo, email, address, gst, rating, orderList });
             newUser.save(err => {
                 if (err)
                     res.status(500).json({ message: { msgBody: "All fields are mandotory", msgError: true } });
@@ -51,7 +56,7 @@ vendoruserRouter.post('/register', (req, res) => {
 vendoruserRouter.post('/login', passport.authenticate('vendor', { session: false }), (req, res) => {
 
     if (req.isAuthenticated()) {
-        const { _id, username, email} = req.user;
+        const { _id, username, email } = req.user;
         // console.log(username, email)
         const token = signToken(_id);
         res.cookie('access_token', token, { httpOnly: true, sameSite: true });
@@ -59,7 +64,7 @@ vendoruserRouter.post('/login', passport.authenticate('vendor', { session: false
         with hence guards from cross-site scripting attacks
         SameSite prevents from cross-site forgery attacks
         Thus important for security by ensuring JWT token is not stolen*/
-        res.status(200).json({ isAuthenticated: true, user: { username, email}});
+        res.status(200).json({ isAuthenticated: true, user: { username, email } });
     }
 });
 
@@ -68,12 +73,18 @@ vendoruserRouter.get('/logout', passport.authenticate('jwt-vendor', { session: f
     //if(req.isAuthenticated())
     res.clearCookie('access_token');
     //console.log('access_token');
-    res.json({ user: { username: "",email:"" }, success: true });
+    res.json({ user: { username: "", email: "" }, success: true });
 });
+
+vendoruserRouter.get('/:id/orders', HttpGetVendorOrders);
+vendoruserRouter.get('/:id/menu', HttpGetVendorMenu);
+vendoruserRouter.post('/:id/menu', HttpAddItemToMenu);
+vendoruserRouter.post('/:id/menu/:itemID', HttpEditItemFromMenu)
+vendoruserRouter.delete('/:id/menu/', HttpDeleteItemFromMenu);
 
 // //to keep user signed in in case he closes the app but didnt logged out
 vendoruserRouter.get('/authenticated', passport.authenticate('jwt-vendor', { session: false }), (req, res) => {
-    const { username,email } = req.user;
-    res.status(200).json({ isAuthenticated: true, user: { username,email } });
+    const { username, email } = req.user;
+    res.status(200).json({ isAuthenticated: true, user: { username, email } });
 });
 module.exports = vendoruserRouter;
