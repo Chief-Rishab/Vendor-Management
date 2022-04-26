@@ -11,7 +11,7 @@ const { HttpGetUserbyUsername,
     HttpRemoveItemFromCart,
     HttpPlaceOrder,
     HttpGetCustomerOrders } = require('./user.controller')
-require('../../../../passport')(passport);
+require('../../../../passport1')(passport);
 
 const signToken = userID => {
     return JWT.sign({
@@ -44,9 +44,10 @@ userRouter.post('/register', (req, res) => {
 });
 
 //login route
-userRouter.post('/login', passport.authenticate('local', { session: false }), (req, res) => {
+userRouter.post('/login', passport.authenticate('user', { session: false }), (req, res) => {
     if (req.isAuthenticated()) {
         const { _id, username, email} = req.user;
+        // console.log(username, email)
         const token = signToken(_id);
         res.cookie('access_token', token, { httpOnly: true, sameSite: true });
         /* httpOnly will make sure that this token cant be changed from the client side using javascript 
@@ -78,7 +79,7 @@ userRouter.get('/:username/orders', HttpGetCustomerOrders)
 
 
 // logout route
-userRouter.get('/logout', passport.authenticate('jwt', { session: false }), (req, res) => {
+userRouter.get('/logout', passport.authenticate('jwt-user', { session: false }), (req, res) => {
     //if(req.isAuthenticated())
     res.clearCookie('access_token');
     //console.log('access_token');
@@ -89,7 +90,7 @@ userRouter.get('/logout', passport.authenticate('jwt', { session: false }), (req
 
 
 //to keep user signed in in case he closes the app but didnt logged out
-userRouter.get('/authenticated', passport.authenticate('jwt', { session: false }), (req, res) => {
+userRouter.get('/authenticated', passport.authenticate('jwt-user', { session: false }), (req, res) => {
     const { username,email } = req.user;
     res.status(200).json({ isAuthenticated: true, user: { username,email } });
 });

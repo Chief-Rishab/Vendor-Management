@@ -11,9 +11,11 @@ import UnPrivateRoute from './hocs/UnPrivateRoute';
 import Login from "./components/Login";
 import Error from './components/Error';
 import NewVendorList from './components/vendorsList';
+import VendorRegister from './components/VendorRegister'
 import UserCart from './components/UserCart';
 import UserOrder from './components/UserOrder';
 import VendorListing from './components/vendorListing';
+import ChooseUser from './components/ChooseUser'
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 import CustomerRegister from './components/CustomerRegister';
 //App.js will contain everything
@@ -34,14 +36,18 @@ const App =()=> {
             <Route path="/about" element={<About/>} />
             
             <Route path="/contact" element={<Contact/>} />
+
+            <Route path="/VendorSignup" element={<VendorRegister/>} />
+
+            <Route path="/ChooseUser" element={<ChooseUser/>} />
             
             <Route element={<UnPrivateRoute/>}>
-                 <Route path="/login" element={<Login/>} />
-                 <Route path="/signup" element={<CustomerRegister/>} />
+                 <Route path="/Login" element={<Login/>} />
+                 <Route path="/Signup" element={<CustomerRegister/>} />
             </Route>            
 
-
             <Route path="/vendors" element={<NewVendorList/>} />
+
             <Route path="/vendors/:id" element={<VendorListing/>} />
             
             <Route element={<PrivateRoute/>}>
@@ -60,4 +66,3 @@ const App =()=> {
 }
 
 export default App;
-
