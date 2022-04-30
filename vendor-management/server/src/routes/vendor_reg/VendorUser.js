@@ -7,7 +7,8 @@ const { HttpGetVendorOrders,
     HttpGetVendorMenu,
     HttpAddItemToMenu,
     HttpDeleteItemFromMenu,
-    HttpEditItemFromMenu } = require('../vendors/vendors.controller')
+    HttpEditItemFromMenu,
+    HttpGetItemFromMenu } = require('../vendors/vendors.controller')
 require("../../../../passport2")(passport);
 
 /*
@@ -79,7 +80,8 @@ vendoruserRouter.get('/logout', passport.authenticate('jwt-vendor', { session: f
 vendoruserRouter.get('/:id/orders', HttpGetVendorOrders);
 vendoruserRouter.get('/:id/menu', HttpGetVendorMenu);
 vendoruserRouter.post('/:id/menu', HttpAddItemToMenu);
-vendoruserRouter.post('/:id/menu/:itemID', HttpEditItemFromMenu)
+vendoruserRouter.post('/:id/menu/edit/:itemID', HttpEditItemFromMenu)
+vendoruserRouter.get('/:id/menu/edit/:itemID', HttpGetItemFromMenu);
 vendoruserRouter.delete('/:id/menu/', HttpDeleteItemFromMenu);
 
 // //to keep user signed in in case he closes the app but didnt logged out

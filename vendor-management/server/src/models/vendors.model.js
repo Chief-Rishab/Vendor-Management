@@ -117,6 +117,15 @@ async function editItemFromMenu(vendorID, itemKey, item){
     return response
 }
 
+async function getItemFromMenu(vendorID, itemKey){
+
+    const response = await vendorsDatabase.findOne({_id: vendorID})
+    const menu = response['menu'];
+    const fetchedItem = menu.filter(item => item.itemKey == mongoose.Types.ObjectId(itemKey));
+
+    return fetchedItem;
+}
+
 
 module.exports = {
     getVendors,
@@ -126,6 +135,7 @@ module.exports = {
     getVendorMenu,
     addItemToMenu,
     deleteItemFromMenu,
-    editItemFromMenu
+    editItemFromMenu,
+    getItemFromMenu
     
 }

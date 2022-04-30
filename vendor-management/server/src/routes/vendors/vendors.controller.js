@@ -4,7 +4,8 @@ const { getVendors,
     getVendorMenu,
     addItemToMenu,
     deleteItemFromMenu,
-    editItemFromMenu } = require('../../models/vendors.model')
+    editItemFromMenu,
+    getItemFromMenu } = require('../../models/vendors.model')
 
 async function HttpGetAllVendors(req, res) {
     return res.send(await getVendors())
@@ -57,6 +58,14 @@ async function HttpEditItemFromMenu(req, res) {
     return res.send(await editItemFromMenu(vendorID, itemKey, item))
 }
 
+async function HttpGetItemFromMenu (req, res){
+
+    const vendorID = req.params.id;
+    const itemKey = req.params.itemID;
+
+    return res.send(await getItemFromMenu(vendorID, itemKey))
+}
+
 module.exports = {
 
     HttpGetAllVendors,
@@ -65,7 +74,8 @@ module.exports = {
     HttpGetVendorMenu,
     HttpAddItemToMenu,
     HttpDeleteItemFromMenu,
-    HttpEditItemFromMenu
+    HttpEditItemFromMenu,
+    HttpGetItemFromMenu
 }
 
 
