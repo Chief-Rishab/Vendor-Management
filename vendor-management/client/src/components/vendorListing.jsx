@@ -124,6 +124,7 @@ const VendorListing = () => {
             {changedMenu.map((item) => (
               <FoodItem
                 key={item.itemName && item.itemKey}
+                itemKey={item.itemKey}
                 itemName={item.itemName}
                 itemDescription={item.itemDescription}
                 itemPrice={item.itemPrice}

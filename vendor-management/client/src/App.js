@@ -18,9 +18,11 @@ import VendorListing from './components/vendorListing';
 import ChooseUser from './components/ChooseUser'
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 import CustomerRegister from './components/CustomerRegister';
+import VendorDashboard from './components/VendorDashboard';
+
 //App.js will contain everything
 //imported to index.js
-//to show whatever's in index.js, document.getElementById(root)
+// to show whatever's in index.js, document.getElementById(root)
 //const { isAuthenticated } = useContext(AuthContext);
 const App =()=> {
     //const {user,setUser,isAuthenticated,setIsAuthenticated}=useContext(AuthContext);
@@ -59,7 +61,7 @@ const App =()=> {
             </Route>
 
             {/* show error page if route doesnt match with anything */}
-            <Route path="*" element={<Error/>} />
+            <Route path="*" element={<VendorDashboard/>} />
             </Routes>
         </Router>
     )

@@ -1,4 +1,4 @@
-const { default: mongoose } = require('mongoose')
+const { default: mongoose, mongo, Mongoose } = require('mongoose')
 const userDatabase = require('./customer')
 const stripe = require('stripe')('sk_test_51KpRU9SBeIeQYzIiqAVHThiuqtKV2kLZy1SLEeMSvyMIKsygSVZceHYlVATY42okNzWxujSaojdRnVShu6Hhu08w00rcRDKFZH');
 const { v4: uuidv4 } = require('uuid');
@@ -21,8 +21,8 @@ async function addItemToCart(username, data) {
     const { item } = data
     const newItem = item['item']
     const vendorID = item['vendorID']
-    console.log("Logging Vendor ID to insert", vendorID)
-    console.log("Logging item to insert", newItem)
+    console.log("Logging itemID to insert", newItem.itemID)
+    const newID = mongoose.Types.ObjectId(newItem.itemID);
     const response = await userDatabase.findOneAndUpdate({ username: username },
         {
             $set: {
@@ -32,6 +32,7 @@ async function addItemToCart(username, data) {
             $push: {
                 "cart.items": {
                     itemID: new mongoose.Types.ObjectId(),
+                    itemKey: newID,
                     itemName: newItem.itemName,
                     itemDescription: newItem.itemDescription,
                     itemPrice: newItem.itemPrice,
@@ -42,7 +43,6 @@ async function addItemToCart(username, data) {
         }, { new: true }
     ).clone()
 
-    console.log(response)
     return response
 }
 
@@ -99,14 +99,15 @@ async function placeOrder(token, amount, cart, user) {
         //* Add new order to customer orders
 
         const orderID = new mongoose.Types.ObjectId();
-
+        const orderDate = new Date();    
         const order = {
 
             orderID: orderID,
             vendorID: cart.vendorID,
             items: cart['items'],
             orderStatus: "In-Progress",
-            totalAmount: amount * 100
+            totalAmount: amount * 100,
+            date: orderDate
         }
 
         let vendor = await getVendorByID(cart.vendorID)
@@ -123,7 +124,7 @@ async function placeOrder(token, amount, cart, user) {
                         items: cart['items'],
                         orderStatus: "In-Progress",
                         totalAmount: amount,
-                        date: new Date()
+                        date: orderDate
                     }
                 }
             }, { new: true }).clone()

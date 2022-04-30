@@ -38,6 +38,7 @@ class FoodItem extends Component {
       if(userCart['items'].length === 0){
 
         const newItem = {
+          itemID: this.props.itemKey,
           itemName: this.props.itemName,
           itemPrice: this.props.itemPrice,
           itemDescription: this.props.itemDescription,
@@ -79,6 +80,7 @@ class FoodItem extends Component {
 
         console.log("User Cart", userCart)
         const newItem = {
+          itemID: this.props.itemKey,
           itemName: this.props.itemName,
           itemPrice: this.props.itemPrice,
           itemDescription: this.props.itemDescription,

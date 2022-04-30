@@ -35,6 +35,7 @@ async function addOrderToVendor(vendorID, order, customerID){
                 items: order['items'],
                 orderStatus: "In-Progress",
                 totalAmount: order.totalAmount,
+                date: order.date
             }
         }
     }).clone();
