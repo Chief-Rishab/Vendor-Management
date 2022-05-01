@@ -1,5 +1,6 @@
 const vendorsDatabase = require('./vendors.mongo')
 const mongoose = require('mongoose')
+const { updateUserOrderStatus } = require('./user.model')
 
 
 async function addVendor(vendor){
@@ -127,6 +128,20 @@ async function getItemFromMenu(vendorID, itemKey){
     return fetchedItem;
 }
 
+async function updateOrderStatus(vendorID, orderID){
+
+    const newID = mongoose.Types.ObjectId(orderID)
+
+    const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID, "orderList.orderID": newID}, {
+        $set: {
+            "orderList.$.orderStatus": "Completed",
+        }
+    })
+
+    console.log("Response", response.orderList);
+    return response.orderList;
+}
+
 
 module.exports = {
     getVendors,
@@ -137,6 +152,7 @@ module.exports = {
     addItemToMenu,
     deleteItemFromMenu,
     editItemFromMenu,
-    getItemFromMenu
+    getItemFromMenu,
+    updateOrderStatus
     
 }

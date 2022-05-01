@@ -8,7 +8,8 @@ const { HttpGetVendorOrders,
     HttpAddItemToMenu,
     HttpDeleteItemFromMenu,
     HttpEditItemFromMenu,
-    HttpGetItemFromMenu } = require('../vendors/vendors.controller')
+    HttpGetItemFromMenu,
+    HttpUpdateOrderStatus } = require('../vendors/vendors.controller')
 require("../../../../passport2")(passport);
 
 /*
@@ -82,7 +83,8 @@ vendoruserRouter.get('/:id/menu', HttpGetVendorMenu);
 vendoruserRouter.post('/:id/menu', HttpAddItemToMenu);
 vendoruserRouter.post('/:id/menu/edit/:itemID', HttpEditItemFromMenu)
 vendoruserRouter.get('/:id/menu/edit/:itemID', HttpGetItemFromMenu);
-vendoruserRouter.delete('/:id/menu/', HttpDeleteItemFromMenu);
+vendoruserRouter.delete('/:id/menu', HttpDeleteItemFromMenu);
+vendoruserRouter.post('/:id/orders/:orderID/update', HttpUpdateOrderStatus)
 
 // //to keep user signed in in case he closes the app but didnt logged out
 vendoruserRouter.get('/authenticated', passport.authenticate('jwt-vendor', { session: false }), (req, res) => {

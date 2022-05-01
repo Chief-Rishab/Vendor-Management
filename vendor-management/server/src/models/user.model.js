@@ -156,11 +156,28 @@ async function getCustomerOrders(username){
     return response["orderList"];
 }
 
+
+
+async function updateCustomerOrderStatus(username, orderID){
+
+    const newID = mongoose.Types.ObjectId(orderID)
+    console.log(username, newID)
+
+    const response = await userDatabase.findOneAndUpdate({username: username, "orderList.orderID": newID}, {
+        $set: {
+            "orderList.$.orderStatus": "Completed",
+        }
+    }, {new: true});
+    console.log(response);
+    return response;
+}
+
 module.exports = {
     getUserbyUsername,
     addItemToCart,
     getCartByUsername,
     deleteItemFromCart,
     placeOrder,
-    getCustomerOrders
+    getCustomerOrders,
+    updateCustomerOrderStatus
 }
