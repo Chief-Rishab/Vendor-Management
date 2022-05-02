@@ -26,17 +26,19 @@ async function getVendorByID(vendorID){
     return await vendorsDatabase.findById(vendorID)
 }
 
-async function addOrderToVendor(vendorID, order, customerID){
+async function addOrderToVendor(vendorID, order, customerID, newOrderID, amount){
+
+    console.log("Inside Log", vendorID, order, customerID);
 
     const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID}, {
         $push: {
             "orderList": {
                 customerID: customerID,
-                orderID: order.orderID,
+                orderID: newOrderID,
                 items: order['items'],
                 orderStatus: "In-Progress",
-                totalAmount: order.totalAmount,
-                date: order.date
+                totalAmount: amount,
+                date: new Date()
             }
         }
     }).clone();
@@ -55,8 +57,7 @@ async function getVendorOrders(vendorID){
 async function getVendorMenu(vendorID){
 
     const response = await vendorsDatabase.findOne({_id: vendorID});
-    console.log(response.menu);
-    return response.menu;
+    return response;
 }
 
 async function addItemToMenu(vendorID, item){

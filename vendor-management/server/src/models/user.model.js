@@ -2,7 +2,8 @@ const { default: mongoose, mongo, Mongoose } = require('mongoose')
 const userDatabase = require('./customer')
 const stripe = require('stripe')('sk_test_51KpRU9SBeIeQYzIiqAVHThiuqtKV2kLZy1SLEeMSvyMIKsygSVZceHYlVATY42okNzWxujSaojdRnVShu6Hhu08w00rcRDKFZH');
 const { v4: uuidv4 } = require('uuid');
-const { addOrderToVendor, getVendorByID } = require('./vendors.model')
+const { response } = require('express');
+// const {addOrderToVendor, getVendorByID} = require('./vendors.model')
 async function getUserbyUsername(username) {
 
     return await userDatabase.findOne({ username: username })
@@ -60,7 +61,7 @@ async function deleteItemFromCart(username, itemid) {
     return response;
 }
 
-async function placeOrder(token, amount, cart, user) {
+async function placeOrder(token, amount, cart, user, vendorName, newOrderID) {
 
     const customer = await stripe.customers.create({
         email: token.email,
@@ -110,17 +111,15 @@ async function placeOrder(token, amount, cart, user) {
             date: orderDate
         }
 
-        let vendor = await getVendorByID(cart.vendorID)
-
-
+        // let vendor = await getVendorByID(cart.vendorID);
 
         let response = await userDatabase.findOneAndUpdate({ username: user.username },
             {
                 $push: {
                     "orderList": {
-                        orderID: orderID,
+                        orderID: newOrderID,
                         vendorID: cart.vendorID,
-                        vendor: vendor.outletName,
+                        vendor: vendorName,
                         items: cart['items'],
                         orderStatus: "In-Progress",
                         totalAmount: amount,
@@ -130,7 +129,6 @@ async function placeOrder(token, amount, cart, user) {
             }, { new: true }).clone()
 
         // //* Delete items from cart
-        const customerID = response["_id"].toString()
 
         response = await userDatabase.findOneAndUpdate({ username: user.username }, {
             $set: {
@@ -138,21 +136,18 @@ async function placeOrder(token, amount, cart, user) {
             }
         }, { new: true }).clone()
 
-        // //* Add order vendor side
-
-        response = await addOrderToVendor(cart.vendorID, order, customerID);
-
         return response;
     }
     else {
         console.log("Payment Failed")
     }
+
+    return response;
 }
 
 async function getCustomerOrders(username){
 
     const response = await userDatabase.findOne({username: username}).clone();
-    console.log(response);
     return response["orderList"];
 }
 

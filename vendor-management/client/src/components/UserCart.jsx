@@ -87,6 +87,8 @@ const UserCart = () => {
       totalAmount = totalAmount + item.itemPrice;
     });
 
+    
+
     return totalAmount;
   };
 

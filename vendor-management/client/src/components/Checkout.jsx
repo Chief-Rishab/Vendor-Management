@@ -11,7 +11,7 @@ export default function Checkout({ amount, cart, user, changeCart }) {
   function tokenHandler(token) {
     console.log(token);
     placeOrder(token, amount, cart, user)
-    window.location.reload()
+    // window.location.reload()
 
   }
   return (

@@ -49,15 +49,14 @@ async function HttpRemoveItemFromCart(req, res) {
 
 async function HttpPlaceOrder(req, res){
 
-    const {token, amount, cart, user} = req.body;
-    placeOrder(token, amount, cart, user);
+    const {token, amount, cart, user, vendorName, newOrderID} = req.body;
+    res.send(await placeOrder(token, amount, cart, user, vendorName, newOrderID));
 
 }
 
 async function HttpGetCustomerOrders(req, res){
 
     const username = req.params.username;
-    console.log("Username", username);
     const response = await getCustomerOrders(username).then((response) => {
         return response;
     })
