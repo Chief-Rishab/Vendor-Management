@@ -28,7 +28,7 @@ menu
     },
 */
 import React, { useState, useRef, useEffect } from 'react';
-import AuthService from '../services/vendorAuthservice';
+import AuthService from '../services/customerAuthservice';
 import Message from './Message';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './styles.module.css'
@@ -37,7 +37,7 @@ import styles from './styles.module.css'
 
 export default function Register(){
     const navigate = useNavigate();
-    const [user, setUser] = useState({ username: "", password: "", phoneNo: "", email: "",gstNo:"", address: "",rating:"", orderList: [Object], menu:[{}]});
+    const [user, setUser] = useState({ username: "", password: "", role:"vendor", phoneNo: "", email: "",gstNo:"", address: "",rating:"", orderList: [Object], menu:[{}]});
 
     //username: "", password: "", phoneNo: "", outletName: "", ownerName:"", address: "", cart: {items: [], vendorID: ""}});
     const [message, setMessage] = useState(null);
@@ -55,18 +55,18 @@ export default function Register(){
 
 
     const resetForm = () => {
-        setUser({ username: "", password: "", phoneNo: "", outletName: "", email: "",gstNo:"", address: "",rating:"",menu:[{}] });
+        setUser({ username: "", password: "",role:"vendor", phoneNo: "", outletName: "", email: "",gstNo:"", address: "",rating:"",menu:[{}] });
     }
 
     const onSubmit = e => {
         e.preventDefault();
-        AuthService.register(user).then(data => {
+        AuthService.vregister(user).then(data => {
             const { message } = data;
             setMessage(message);
             resetForm();
             if (!message.msgError) { // if any error show the message to the user for 2seconds and then redirect to login page
                 timerID = setTimeout(() => {
-                    navigate('/login');
+                    navigate('/Vendorlogin');
                 }, 2000)
             }
         });

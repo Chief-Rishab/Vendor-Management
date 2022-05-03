@@ -26,6 +26,7 @@ const Home = props =>{
             </div>
         )
     }
+
     return(
             <div className="home-page">
                     {isAuthenticated ? authenticatedHome() : unauthenticatedHome()}

@@ -9,11 +9,19 @@ export default ({ children })=>{
     const [isLoaded,setIsLoaded] = useState(false);
 
     useEffect(()=>{
+       // if(user.role==="customer")
         AuthService.isAuthenticated().then(data =>{
             setUser(data.user);
             setIsAuthenticated(data.isAuthenticated);
             setIsLoaded(true);
         });
+        // ---------Garvit Look at this once-----------------
+        //else if(user.role==="vendor")
+        // AuthService.isVAuthenticated().then(data =>{
+        //     setUser(data.user);
+        //     setIsAuthenticated(data.isAuthenticated);
+        //     setIsLoaded(true);
+        // });
     },[]);
 
     return (

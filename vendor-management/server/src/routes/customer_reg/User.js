@@ -22,7 +22,7 @@ const signToken = userID => {
 }
 
 userRouter.post('/register', (req, res) => {
-    const { username, password, phoneNo, email, address, cart, orderList } = req.body;
+    const { username, password,role="customer", phoneNo, email, address, cart, orderList } = req.body;
     //  console.log(req.body);
     User.findOne({ username }, (err, user) => {
         //  console.log(err);
@@ -33,7 +33,7 @@ userRouter.post('/register', (req, res) => {
             res.status(400).json({ message: { msgBody: "Username has already been taken", msgError: true } });
         }
         else {
-            const newUser = new User({ username, password, phoneNo, address, email, cart, orderList });
+            const newUser = new User({ username, password, role, phoneNo, address, email, cart, orderList });
             newUser.save(err => {
                 if (err)
                     res.status(500).json({ message: { msgBody: "All fields are mandotory", msgError: true } });
@@ -47,7 +47,7 @@ userRouter.post('/register', (req, res) => {
 //login route
 userRouter.post('/login', passport.authenticate('user', { session: false }), (req, res) => {
     if (req.isAuthenticated()) {
-        const { _id, username, email} = req.user;
+        const { _id, username, email,role} = req.user;
         // console.log(username, email)
         const token = signToken(_id);
         res.cookie('access_token', token, { httpOnly: true, sameSite: true });
@@ -56,7 +56,7 @@ userRouter.post('/login', passport.authenticate('user', { session: false }), (re
         SameSite prevents from cross-site forgery attacks
         Thus important for security by ensuring JWT token is not stolen
         */
-        res.status(200).json({ isAuthenticated: true, user: { username, email } });
+        res.status(200).json({ isAuthenticated: true, user: { username, email,role } });
     }
 });
 
@@ -84,7 +84,7 @@ userRouter.get('/logout', passport.authenticate('jwt-user', { session: false }),
     //if(req.isAuthenticated())
     res.clearCookie('access_token');
     //console.log('access_token');
-    res.json({ user: { username: "",email:"" }, success: true });
+    res.json({ user: { username: "",email:"",role:"" }, success: true });
 });
 
 //incase you want to write roles add a vendor route here
@@ -92,8 +92,8 @@ userRouter.get('/logout', passport.authenticate('jwt-user', { session: false }),
 
 //to keep user signed in in case he closes the app but didnt logged out
 userRouter.get('/authenticated', passport.authenticate('jwt-user', { session: false }), (req, res) => {
-    const { username,email } = req.user;
-    res.status(200).json({ isAuthenticated: true, user: { username,email } });
+    const { username,email,role } = req.user;
+    res.status(200).json({ isAuthenticated: true, user: { username,email,role} });
 });
 module.exports = userRouter;
 
