@@ -59,7 +59,7 @@ function Row(props) {
                   event.target.value,
                   row.vendorID,
                   row.orderID,
-                  user
+                  row.customerID
                 );
               }}
             />
@@ -117,7 +117,11 @@ export default function UserOrder() {
   useEffect(async () => {
     const orders = await getCustomerOrders(user.username);
     console.log("User Orders", orders.data);
-    setOrders(orders.data);
+    let sorted = orders.data.sort((a, b) => {
+      return a.orderDate > b.orderDate;
+    })
+    console.log(sorted)
+    setOrders(sorted.reverse());
   }, []);
 
   return (

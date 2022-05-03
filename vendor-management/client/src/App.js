@@ -19,12 +19,16 @@ import VendorListing from './components/vendorListing';
 import ChooseUser from './components/ChooseUser'
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 import CustomerRegister from './components/CustomerRegister';
-import EditItem from './components/EditItem';
+import VendorDashboard from './components/VendorDashboard';
 import VendorMenu from './components/VendorMenu';
+import VendorOrder from './components/VendorOrder';
+import EditItem from './components/EditItem';
+import AddItem from './components/AddItem';
 
 //App.js will contain everything
 //imported to index.js
-// to show whatever's in index.js, document.getElementById(root)
+
+//  to show whatever's in index.js, document.getElementById(root)
 //const { isAuthenticated } = useContext(AuthContext);
 const App =()=> {
     //const {user,setUser,isAuthenticated,setIsAuthenticated}=useContext(AuthContext);
@@ -63,6 +67,22 @@ const App =()=> {
 
             <Route element={<PrivateRoute/>}>
                  <Route path="/Orders" element={<UserOrder/>}/> 
+            </Route>
+
+            <Route element={<PrivateRoute/>}>
+                 <Route path="/Menu" element={<VendorMenu/>}/> 
+            </Route>
+
+            <Route element={<PrivateRoute/>}>
+                 <Route path="/Menu/edit/:itemID" element={<EditItem/>}/> 
+            </Route>
+
+            <Route element={<PrivateRoute/>}>
+                 <Route path="/Menu/add" element={<AddItem/>}/> 
+            </Route>
+
+            <Route element={<PrivateRoute/>}>
+                 <Route path="/vendororders" element={<VendorOrder/>}/> 
             </Route>
 
             {/* show error page if route doesnt match with anything */}

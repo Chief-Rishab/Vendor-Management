@@ -25,6 +25,7 @@ async function HttpGetVendorByID(req, res) {
 async function HttpGetVendorOrders(req, res) {
 
     const vendorID = req.params.id;
+    console.log("NOOO", vendorID)
 
     return res.send(await getVendorOrders(vendorID))
 }
@@ -32,7 +33,7 @@ async function HttpGetVendorOrders(req, res) {
 async function HttpGetVendorMenu(req, res) {
 
     const vendorID = req.params.id;
-
+    console.log("VendorID", vendorID)
     return res.send(await getVendorMenu(vendorID))
 }
 
@@ -48,17 +49,17 @@ async function HttpAddItemToMenu(req, res) {
 async function HttpDeleteItemFromMenu(req, res) {
 
     const vendorID = req.params.id
-    const { itemKey } = req.body
+    const itemKey = req.params.itemID
+
     return res.send(await deleteItemFromMenu(vendorID, itemKey))
 }
 
 async function HttpEditItemFromMenu(req, res) {
 
     const vendorID = req.params.id
-    const itemKey = req.params.itemID
     const item = req.body
 
-    return res.send(await editItemFromMenu(vendorID, itemKey, item))
+    return res.send(await editItemFromMenu(vendorID, item.itemKey, item))
 }
 
 async function HttpGetItemFromMenu(req, res) {
@@ -73,6 +74,7 @@ async function HttpUpdateOrderStatus(req, res) {
 
     const orderID = req.params.orderID
     const vendorID = req.params.id;
+    console.log("HTTP", orderID, vendorID)
     return res.send(await updateOrderStatus(vendorID, orderID));
 }
 

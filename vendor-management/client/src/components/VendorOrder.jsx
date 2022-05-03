@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
@@ -16,12 +16,17 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext_consumer";
 import { useContext } from "react";
-import { getVendorOrders } from "../hooks/requests";
+import { getVendorOrders, updateOrderStatus } from "../hooks/requests";
+import Button from "@mui/material/Button";
 
 function Row(props) {
   const { row, user } = props;
   const [open, setOpen] = React.useState(false);
   const [orderRating, setRating] = React.useState(row.rating);
+
+  const updateStatus = async (orderID, customerID, vendorID) => {
+    const response = await updateOrderStatus(orderID,  customerID, vendorID)
+  };
 
   return (
     <React.Fragment>
@@ -35,7 +40,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="left">{row.vendor || row.vendorID}</TableCell>
+
         <TableCell align="left">
           {(row.date && row.date.substring(0, 10)) || "Old Order"}
         </TableCell>
@@ -48,8 +53,26 @@ function Row(props) {
         <TableCell align="left">{row.totalAmount}</TableCell>
         <TableCell align="left">
           {row.orderStatus == "Completed" && (
-             <Rating name="read-only" value={0 && row.rating} readOnly />
+            <Rating
+              name="read-only"
+              value={row.rating ? row.rating : 0}
+              readOnly
+            />
           )}
+        </TableCell>
+        <TableCell align="left">
+          {
+            <Button
+              variant="outlined"
+              onClick={async () => {
+
+                await updateStatus(row.orderID, row.customerID, user.email)
+              }}
+              disabled={row.orderStatus == "Completed"}
+            >
+              Update Status
+            </Button>
+          }
         </TableCell>
       </TableRow>
       <TableRow>
@@ -101,8 +124,10 @@ export default function VendorOrder() {
     useContext(AuthContext);
 
   useEffect(async () => {
-
-    const orders = await getVendorOrders(user.username);
+    const orders = await getVendorOrders(user.email);
+    let sorted = orders.data.sort((a, b) => {
+      return a.orderDate < b.orderDate;
+    })
     setOrders(orders.data);
   }, []);
 
@@ -112,9 +137,6 @@ export default function VendorOrder() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell align="left">
-              <b>Vendor</b>
-            </TableCell>
             <TableCell align="left">
               <b>Date</b>
             </TableCell>
@@ -126,6 +148,9 @@ export default function VendorOrder() {
             </TableCell>
             <TableCell align="left">
               <b>Rating</b>
+            </TableCell>
+            <TableCell align="left">
+              <b>Update Status</b>
             </TableCell>
           </TableRow>
         </TableHead>

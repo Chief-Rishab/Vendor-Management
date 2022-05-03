@@ -26,6 +26,13 @@ export async function HttpGetVendorByID(vendorID) {
     return response
 }
 
+async function HttpGetVendorMenu(username){
+
+    console.log(`${API_URL}/vendor/${username}/menu`)
+    const response = await axios.get(`${API_URL}/vendor/${username}/menu`)
+    return response
+}
+
 
 async function HttpGetUserByUsername(username) {
     const response = await axios.get(userURL(username)).then((response) => {
@@ -64,11 +71,11 @@ async function getCustomerOrders(username){
     return response;
 }
 
-async function updateVendorRating(rating, vendorID, orderID, user){
+async function updateVendorRating(rating, vendorID, orderID, customerID){
 
     const URL = `${API_URL}/vendor/${vendorID}/orders/${orderID}/rate`
     const response = await axios.post(URL, {rating})
-    const userReponse = await axios.post(`${API_URL}/customer/${user.username}/orders/${orderID}/rate`, {rating})
+    const userReponse = await axios.post(`${API_URL}/customer/${customerID}/orders/${orderID}/rate`, {rating})
     return response;
 }
 
@@ -79,6 +86,15 @@ async function getVendorOrders(vendorID){
     return response;
 }
 
+async function getMenuItem(itemID, vendorID){
+
+
+    const URL = `${API_URL}/vendor/${vendorID}/menu/edit/${itemID}`
+    const response = await axios.get(URL);
+    console.log("Returned Response", response)
+    return response.data;
+}
+
 async function editMenuItem(item, vendorID){
 
     const URL = `${API_URL}/vendor/${vendorID}/menu/edit/${item.itemID}`
@@ -86,13 +102,46 @@ async function editMenuItem(item, vendorID){
     return response;
 }
 
+async function addItemToMenu(item, vendorID){
+
+    const URL = `${API_URL}/vendor/${vendorID}/menu`
+    const response = await axios.post(URL, item);
+    return response;
+}
+
+async function deleteItemFromMenu(item, vendorID){
+
+
+    const URL = `${API_URL}/vendor/${vendorID}/menu/${item.itemKey}`
+    console.log("Sent", item)
+    const response = await axios.delete(URL);
+    return response;
+}
+
+async function updateOrderStatus(orderID, customerID, vendorID){
+
+    const VENDOR_URL = `${API_URL}/vendor/${vendorID}/orders/${orderID}/update`
+    const CUSTOMER_URL = `${API_URL}/customer/${customerID}/orders/${orderID}/update`
+    
+    let response = axios.post(VENDOR_URL);
+    response = axios.post(CUSTOMER_URL);
+
+    return response;
+}
+
+
 export {
     httpGetVendors,
     HttpGetUserByUsername,
     HttpAddItemToCart,
+    HttpGetVendorMenu,
     deleteItemFromCart,
     getCustomerOrders,
     updateVendorRating,
     getVendorOrders,
-    editMenuItem
+    editMenuItem,
+    getMenuItem,
+    addItemToMenu,
+    deleteItemFromMenu,
+    updateOrderStatus
 }

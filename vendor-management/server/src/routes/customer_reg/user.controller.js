@@ -51,6 +51,7 @@ async function HttpRemoveItemFromCart(req, res) {
 async function HttpPlaceOrder(req, res){
 
     const {token, amount, cart, user, vendorName, newOrderID} = req.body;
+    console.log("REQBODY", req.body)
     res.send(await placeOrder(token, amount, cart, user, vendorName, newOrderID));
 
 }
@@ -69,6 +70,7 @@ async function HttpUpdateUserOrderStatus(req, res){
 
     const username = req.params.username;
     const orderID = req.params.orderID;
+    
     res.send(await updateCustomerOrderStatus(username, orderID))
 }
 

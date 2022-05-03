@@ -35,7 +35,7 @@ async function addOrderToVendor(vendorID, order, customerID, newOrderID, amount)
         $push: {
             "orderList": {
                 customerID: customerID,
-                orderID: newOrderID,
+                orderID: newOrderID.toString(),
                 items: order['items'],
                 orderStatus: "In-Progress",
                 totalAmount: amount,
@@ -50,20 +50,24 @@ async function addOrderToVendor(vendorID, order, customerID, newOrderID, amount)
 
 async function getVendorOrders(vendorID){
 
-    const response = await vendorsDatabase.findOne({_id: vendorID});
-    console.log(response.orderList);
-    return response.orderList;
+    console.log("VendorID", vendorID)
+    const response = await vendorsDatabase.find({"email": vendorID});
+    console.log(response[0])
+    return response[0].orderList;
 }
 
 async function getVendorMenu(vendorID){
 
+
+
     const response = await vendorsDatabase.findOne({_id: vendorID});
+    console.log("Nothing", response)
     return response;
 }
 
 async function addItemToMenu(vendorID, item){
 
-    const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID}, {
+    const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID}, {
         $push: {
 
             "menu": {
@@ -84,17 +88,15 @@ async function addItemToMenu(vendorID, item){
 
 async function deleteItemFromMenu (vendorID, itemKey){
 
-    console.log(itemKey);
+    console.log("itemKey", itemKey, vendorID);
 
-    const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID}, {
+    const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID}, {
         $pull: {
             "menu": {
                 itemKey: mongoose.Types.ObjectId(itemKey)
             }
         }
     }, {new: true})
-
-    console.log("Menu", response.menu)
 
     return response.menu;
 }
@@ -103,7 +105,7 @@ async function editItemFromMenu(vendorID, itemKey, item){
 
     console.log(item);
 
-    const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID, "menu.itemKey": mongoose.Types.ObjectId(item.itemKey)}, {
+    const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID, "menu.itemKey": mongoose.Types.ObjectId(item.itemKey)}, {
 
         $set: {
 
@@ -123,25 +125,27 @@ async function editItemFromMenu(vendorID, itemKey, item){
 
 async function getItemFromMenu(vendorID, itemKey){
 
-    const response = await vendorsDatabase.findOne({_id: vendorID})
-    const menu = response['menu'];
-    const fetchedItem = menu.filter(item => item.itemKey == mongoose.Types.ObjectId(itemKey));
 
-    return fetchedItem;
+    const response = await vendorsDatabase.findOne({"email": vendorID})
+
+    const menu = response['menu'];
+    const newID = mongoose.Types.ObjectId(itemKey)
+    const fetched = menu.filter((item) => item.itemKey.toString() == newID.toString())
+    return fetched[0];
 }
 
 async function updateOrderStatus(vendorID, orderID){
 
-    const newID = mongoose.Types.ObjectId(orderID)
+    console.log("vendorID", vendorID)
 
-    const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID, "orderList.orderID": newID}, {
+    const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID, "orderList.orderID": orderID}, {
         $set: {
             "orderList.$.orderStatus": "Completed",
         }
     })
 
-    console.log("Response", response.orderList);
-    return response.orderList;
+    console.log("Response", response);
+    return response;
 }
 
 function calculateNewRating(orderList){
@@ -166,7 +170,7 @@ function calculateNewRating(orderList){
 async function updateVendorRating(vendorID, rating, orderID){
 
     const newID = mongoose.Types.ObjectId(orderID)
-    let response = await vendorsDatabase.findOneAndUpdate({_id: vendorID, "orderList.orderID": newID}, {
+    let response = await vendorsDatabase.findOneAndUpdate({_id: vendorID, "orderList.orderID": orderID}, {
         $set: {
             "orderList.$.rating": rating,
         }

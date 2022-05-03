@@ -3,7 +3,7 @@ import { useContext } from "react";
 import FoodItem from "./foodItem";
 import VendorFoodItem from "./VendorFoodItem";
 import { Grid } from "@mui/material";
-import { HttpGetVendorByID } from "../hooks/requests";
+import { HttpGetVendorMenu } from "../hooks/requests";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext_consumer";
@@ -18,13 +18,15 @@ export default function VendorMenu() {
   const [currentMenu, setMenu] = useState([]);
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
-  console.log(user);
+    console.log("User", user)
   const [checked, setChecked] = useState(false);
   const [changedMenu, setChange] = useState([]);
   const { id } = useParams();
 
   useEffect(async () => {
-    const fetchedVendor = await HttpGetVendorByID(id);
+
+    let fetchedVendor = await HttpGetVendorMenu(user.email);
+    console.log("Fetched Vendor", fetchedVendor.data)
     setVendor(fetchedVendor.data);
     setMenu(fetchedVendor.data.menu);
     setChange(fetchedVendor.data.menu);
@@ -114,7 +116,7 @@ export default function VendorMenu() {
               itemDescription={item.itemDescription}
               itemPrice={item.itemPrice}
               isVeg={item.isVeg}
-              image={item.image}
+              image={item.image ? item.image : ""}
               isAuthenticated={isAuthenticated}
               user={user}
               vendor={id}

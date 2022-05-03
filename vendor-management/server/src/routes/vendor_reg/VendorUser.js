@@ -85,7 +85,7 @@ vendoruserRouter.get('/:id/menu', HttpGetVendorMenu);
 vendoruserRouter.post('/:id/menu', HttpAddItemToMenu);
 vendoruserRouter.post('/:id/menu/edit/:itemID', HttpEditItemFromMenu)
 vendoruserRouter.get('/:id/menu/edit/:itemID', HttpGetItemFromMenu);
-vendoruserRouter.delete('/:id/menu', HttpDeleteItemFromMenu);
+vendoruserRouter.delete('/:id/menu/:itemID', HttpDeleteItemFromMenu);
 vendoruserRouter.post('/:id/orders/:orderID/update', HttpUpdateOrderStatus)
 vendoruserRouter.post('/:id/orders', HttpAddOrderToVendor)
 vendoruserRouter.post('/:id/orders/:orderID/rate', HttpUpdateVendorRating)

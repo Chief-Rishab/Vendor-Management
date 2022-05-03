@@ -99,17 +99,7 @@ async function placeOrder(token, amount, cart, user, vendorName, newOrderID) {
 
         //* Add new order to customer orders
 
-        const orderID = new mongoose.Types.ObjectId();
         const orderDate = new Date();    
-        const order = {
-
-            orderID: orderID,
-            vendorID: cart.vendorID,
-            items: cart['items'],
-            orderStatus: "In-Progress",
-            totalAmount: amount * 100,
-            date: orderDate
-        }
 
         // let vendor = await getVendorByID(cart.vendorID);
 
@@ -117,7 +107,7 @@ async function placeOrder(token, amount, cart, user, vendorName, newOrderID) {
             {
                 $push: {
                     "orderList": {
-                        orderID: newOrderID,
+                        orderID: newOrderID.toString(),
                         vendorID: cart.vendorID,
                         vendor: vendorName,
                         items: cart['items'],
@@ -156,9 +146,9 @@ async function getCustomerOrders(username){
 async function updateCustomerOrderStatus(username, orderID){
 
     const newID = mongoose.Types.ObjectId(orderID)
-    console.log(username, newID)
+    console.log("Hello", username, newID)
 
-    const response = await userDatabase.findOneAndUpdate({username: username, "orderList.orderID": newID}, {
+    const response = await userDatabase.findOneAndUpdate({_id: username, "orderList.orderID": orderID}, {
         $set: {
             "orderList.$.orderStatus": "Completed",
         }
@@ -170,7 +160,7 @@ async function updateCustomerOrderStatus(username, orderID){
 async function updateCusomterOrderRating(username, orderID, rating){
 
     const newID = mongoose.Types.ObjectId(orderID)
-    const response = await userDatabase.findOneAndUpdate({username: username, "orderList.orderID":newID}, {
+    const response = await userDatabase.findOneAndUpdate({_id: username, "orderList.orderID":orderID}, {
         $set: {
             "orderList.$.rating": rating,
         }
