@@ -29,12 +29,12 @@ export default{
         return data;
     },
 
-    isAuthenticated : async ()=>{   //sync backend and frontend for keeping the user signed in in case app is closed and open again, we will use the context api to call this function
+    isVAuthenticated : async ()=>{   //sync backend and frontend for keeping the Vuser signed in in case app is closed and open again, we will use the context api to call this function
         const res = await fetch('/vendor/authenticated');
         if (res.status !== 401)
             return res.json().then(data => data);
 
         else
-            return { isAuthenticated: false, user: { username: "", email:""} };
+            return { isAuthenticated: false, user: { username: "", email:"", role:"" }};
     }
 }

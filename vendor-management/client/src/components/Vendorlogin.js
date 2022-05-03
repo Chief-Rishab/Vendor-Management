@@ -1,10 +1,10 @@
 import React, {useState,useContext} from 'react';
 import AuthService from '../services/customerAuthservice';
-import Message from '../components/Message';
-import {AuthContext} from '../Context/AuthContext_consumer';
+import Message from './Message';
+import {AuthContext} from '../Context/AuthContext_consumer'
 import { Navigate, useNavigate } from 'react-router-dom';
 
-const Login = props=>{
+const Vendorlogin = props=>{
     const navigate=useNavigate();
     const [user,setUser] = useState({username: "", password : "",email:"",role:""});
     const [message,setMessage] = useState(null);
@@ -16,13 +16,14 @@ const Login = props=>{
 
     const onSubmit = e =>{
         e.preventDefault();
-        AuthService.login(user).then(data=>{
+        AuthService.vlogin(user).then(data=>{
             //console.log(data);
             const { isAuthenticated,user,message} = data;
             if(isAuthenticated){
                 authContext.setUser(user);
                 authContext.setIsAuthenticated(isAuthenticated);
-                navigate('/home');
+
+                navigate('/Dashboard');
             }
             else
                 setMessage(message);
@@ -35,7 +36,7 @@ const Login = props=>{
                 <div className="col-md-10 mt-4 text-left">
             <form onSubmit={onSubmit}>
             
-                <h2 className="m-3" style={{fontSize:'25px'}}>Customer Login</h2>
+                <h2 className="m-3" style={{fontSize:'25px'}}>Vendor Login</h2>
                 <input type="text" 
                        name="username" 
                        onChange={onChange} 
@@ -63,4 +64,4 @@ const Login = props=>{
     )
 }
 
-export default Login;
+export default Vendorlogin;
