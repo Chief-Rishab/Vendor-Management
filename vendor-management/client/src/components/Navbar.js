@@ -6,9 +6,21 @@ import { AuthContext } from '../Context/AuthContext_consumer';
 const Navbar = props =>{
     const navigate=useNavigate();
     const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
-    
+    console.log(user);
+    //Customer Logout handler
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
+            if(data.success){
+                setUser(data.user);
+                setIsAuthenticated(false);
+                navigate('/');
+            }
+        });
+    }
+
+    // Vendor logout handler
+    const onClickLogoutHandler2 = ()=>{
+        AuthService.vlogout().then(data=>{
             if(data.success){
                 setUser(data.user);
                 setIsAuthenticated(false);
@@ -75,20 +87,38 @@ const Navbar = props =>{
                     Food Outlets
                     </li>
                 </Link>      
-                {/* {
-                    user.role === "admin" ? 
-                    <Link to="/admin">
-                        <li className="nav-item nav-link">
-                            Admin
-                        </li>
-                    </Link> : null
-                }   */}
                 <btn1 type="button" 
                         className="btn btn-link nav-item nav-link" 
                         onClick={onClickLogoutHandler}>Logout</btn1>
             </>
         )
     }
+
+    const vendorauthenticatedNavBar = ()=>{
+        return(
+            <>
+                <Link to="/Dashboard">
+                    <li className="nav-item nav-link">
+                        Dashboard
+                    </li>
+                </Link>
+                <Link to="/Menu">
+                    <li className="nav-item nav-link">
+                        Menu
+                    </li>
+                </Link>
+                <Link to="/VendorOrders">
+                    <li className="nav-item nav-link">
+                        Orders
+                    </li>
+                </Link>
+                <btn1 type="button" 
+                        className="btn btn-link nav-item nav-link" 
+                        onClick={onClickLogoutHandler2}>Logout</btn1>
+            </>
+        )
+    }
+
     return(
         <nav className="navbar navbar-expand-lg shadow-lg p-3 mb-5 bg-white rounded">
             <Link to="/">
@@ -97,7 +127,7 @@ const Navbar = props =>{
             <div className="collapse navbar-collapse" id="navbarText">
                 <ul className="navbar-nav ms-auto">
                     {
-                    !isAuthenticated ? unauthenticatedNavBar() : authenticatedNavBar()}
+                       !isAuthenticated ? unauthenticatedNavBar() : !(user.role ==="vendor")? authenticatedNavBar():vendorauthenticatedNavBar() }
                 </ul>
             </div>
         </nav>

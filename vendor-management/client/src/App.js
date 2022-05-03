@@ -9,6 +9,8 @@ import Contact from "./components/Contact";
 import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
 import Login from "./components/Login";
+import Vendorlogin from "./components/Vendorlogin"
+import Error from './components/Error';
 import NewVendorList from './components/vendorsList';
 import VendorRegister from './components/VendorRegister'
 import UserCart from './components/UserCart';
@@ -43,9 +45,11 @@ const App =()=> {
 
             <Route path="/ChooseUser" element={<ChooseUser/>} />
             
+        
             <Route element={<UnPrivateRoute/>}>
                  <Route path="/Login" element={<Login/>} />
                  <Route path="/Signup" element={<CustomerRegister/>} />
+                 <Route path="/Vendorlogin" element={<Vendorlogin/>} />
             </Route>            
 
             <Route path="/vendors" element={<NewVendorList/>} />
@@ -54,6 +58,7 @@ const App =()=> {
             
             <Route element={<PrivateRoute/>}>
                  <Route path="/Cart" element={<UserCart/>}/> 
+                 <Route path="/Dashboard" element={<VendorDashboard/>} />
             </Route>
 
             <Route element={<PrivateRoute/>}>
@@ -61,7 +66,7 @@ const App =()=> {
             </Route>
 
             {/* show error page if route doesnt match with anything */}
-            <Route path="*" element={<VendorMenu/>} />
+            <Route path="*" element={<Error/>} />
             </Routes>
         </Router>
     )

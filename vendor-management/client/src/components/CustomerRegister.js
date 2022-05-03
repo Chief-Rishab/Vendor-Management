@@ -8,7 +8,7 @@ import styles from './styles.module.css'
 
 export default function Register(){
     const navigate = useNavigate();
-    const [user, setUser] = useState({ username: "", password: "", phoneNo: "", email: "", address: "",cart: {items: [], vendorID: ""}, orderList: [] });
+    const [user, setUser] = useState({ username: "", password: "", role: "customer", phoneNo: "", email: "", address: "",cart: {items: [], vendorID: ""}, orderList: [] });
     const [message, setMessage] = useState(null);
     let timerID = useRef(null);
 
@@ -23,7 +23,7 @@ export default function Register(){
     }
 
     const resetForm = () => {
-        setUser({ username: "", password: "", phoneNo: "", email: "", address: "", cart: {items: [], vendorID: ""}});
+        setUser({ username: "", password: "", role: "customer", phoneNo: "", email: "", address: "", cart: {items: [], vendorID: ""}});
     }
 
     const onSubmit = e => {
