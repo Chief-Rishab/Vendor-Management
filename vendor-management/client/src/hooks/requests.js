@@ -64,10 +64,35 @@ async function getCustomerOrders(username){
     return response;
 }
 
+async function updateVendorRating(rating, vendorID, orderID, user){
+
+    const URL = `${API_URL}/vendor/${vendorID}/orders/${orderID}/rate`
+    const response = await axios.post(URL, {rating})
+    const userReponse = await axios.post(`${API_URL}/customer/${user.username}/orders/${orderID}/rate`, {rating})
+    return response;
+}
+
+async function getVendorOrders(vendorID){
+
+    const URL = `${API_URL}/vendor/${vendorID}/orders`
+    const response = await axios.get(URL);
+    return response;
+}
+
+async function editMenuItem(item, vendorID){
+
+    const URL = `${API_URL}/vendor/${vendorID}/menu/edit/${item.itemID}`
+    const response = await axios.post(URL, item);
+    return response;
+}
+
 export {
     httpGetVendors,
     HttpGetUserByUsername,
     HttpAddItemToCart,
     deleteItemFromCart,
-    getCustomerOrders
+    getCustomerOrders,
+    updateVendorRating,
+    getVendorOrders,
+    editMenuItem
 }

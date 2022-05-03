@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useContext } from "react";
 import FoodItem from "./foodItem";
 import { Grid } from "@mui/material";
@@ -9,10 +9,7 @@ import { AuthContext } from "../Context/AuthContext_consumer";
 import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {

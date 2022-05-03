@@ -9,7 +9,6 @@ import Contact from "./components/Contact";
 import PrivateRoute from './hocs/PrivateRoute';
 import UnPrivateRoute from './hocs/UnPrivateRoute';
 import Login from "./components/Login";
-import Error from './components/Error';
 import NewVendorList from './components/vendorsList';
 import VendorRegister from './components/VendorRegister'
 import UserCart from './components/UserCart';
@@ -18,7 +17,8 @@ import VendorListing from './components/vendorListing';
 import ChooseUser from './components/ChooseUser'
 import { BrowserRouter as Router,Route } from 'react-router-dom';
 import CustomerRegister from './components/CustomerRegister';
-import VendorDashboard from './components/VendorDashboard';
+import EditItem from './components/EditItem';
+import VendorMenu from './components/VendorMenu';
 
 //App.js will contain everything
 //imported to index.js
@@ -61,7 +61,7 @@ const App =()=> {
             </Route>
 
             {/* show error page if route doesnt match with anything */}
-            <Route path="*" element={<VendorDashboard/>} />
+            <Route path="*" element={<VendorMenu/>} />
             </Routes>
         </Router>
     )

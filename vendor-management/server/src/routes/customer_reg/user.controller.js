@@ -4,7 +4,8 @@ const { getUserbyUsername,
     deleteItemFromCart,
     placeOrder,
     getCustomerOrders,
-    updateCustomerOrderStatus } = require('../../models/user.model')
+    updateCustomerOrderStatus,
+    updateCusomterOrderRating } = require('../../models/user.model')
 
 async function HttpGetUserbyUsername(req, res) {
     const userName = req.params.username
@@ -71,6 +72,14 @@ async function HttpUpdateUserOrderStatus(req, res){
     res.send(await updateCustomerOrderStatus(username, orderID))
 }
 
+async function HttpUpdateCustomerOrderRating(req, res){
+
+    const username = req.params.username
+    const orderID = req.params.orderID;
+    const {rating} = req.body
+    res.send(await updateCusomterOrderRating(username, orderID, rating))
+}
+
 
 module.exports = {
     HttpGetUserbyUsername,
@@ -80,5 +89,6 @@ module.exports = {
     HttpGetItemFromCart,
     HttpPlaceOrder,
     HttpGetCustomerOrders,
-    HttpUpdateUserOrderStatus
+    HttpUpdateUserOrderStatus,
+    HttpUpdateCustomerOrderRating
 }

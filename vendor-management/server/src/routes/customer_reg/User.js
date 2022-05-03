@@ -11,7 +11,8 @@ const { HttpGetUserbyUsername,
     HttpRemoveItemFromCart,
     HttpPlaceOrder,
     HttpGetCustomerOrders,
-    HttpUpdateUserOrderStatus } = require('./user.controller')
+    HttpUpdateUserOrderStatus,
+    HttpUpdateCustomerOrderRating } = require('./user.controller')
 require('../../../../passport1')(passport);
 
 const signToken = userID => {
@@ -102,3 +103,4 @@ userRouter.get('/:username/cart', HttpGetUserCart)
 userRouter.get('/:username/cart/:id', HttpGetItemFromCart)
 userRouter.delete('/:username/cart/:id', HttpRemoveItemFromCart)
 userRouter.post('/:username/orders/:orderID/update', HttpUpdateUserOrderStatus)
+userRouter.post('/:username/orders/:orderID/rate', HttpUpdateCustomerOrderRating)

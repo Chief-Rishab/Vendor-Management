@@ -45,7 +45,7 @@ const NewVendor = ({ vendorID, name, location, rating , onSelect}) => {
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" component="div" sx = {{m: 2}}>
-              {`Rating: ${rating}`}
+              {`Rating: ${rating.toFixed(2)}`}
             </Typography>
           </Grid>
         </Grid>

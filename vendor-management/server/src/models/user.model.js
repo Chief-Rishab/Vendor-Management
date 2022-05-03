@@ -167,6 +167,18 @@ async function updateCustomerOrderStatus(username, orderID){
     return response;
 }
 
+async function updateCusomterOrderRating(username, orderID, rating){
+
+    const newID = mongoose.Types.ObjectId(orderID)
+    const response = await userDatabase.findOneAndUpdate({username: username, "orderList.orderID":newID}, {
+        $set: {
+            "orderList.$.rating": rating,
+        }
+    }, {new: true}).clone();
+
+    return response;
+}
+
 module.exports = {
     getUserbyUsername,
     addItemToCart,
@@ -174,5 +186,6 @@ module.exports = {
     deleteItemFromCart,
     placeOrder,
     getCustomerOrders,
-    updateCustomerOrderStatus
+    updateCustomerOrderStatus,
+    updateCusomterOrderRating
 }

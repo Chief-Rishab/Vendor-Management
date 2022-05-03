@@ -1,9 +1,4 @@
 import React from "react";
-import { getCustomerOrders } from "../hooks/requests";
-import { useState, useEffect } from "react";
-import { AuthContext } from "../Context/AuthContext_consumer";
-import { useContext } from "react";
-import PropTypes from "prop-types";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
@@ -18,7 +13,10 @@ import Rating from "@mui/material/Rating";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { updateVendorRating } from "../hooks/requests";
+import { useState, useEffect } from "react";
+import { AuthContext } from "../Context/AuthContext_consumer";
+import { useContext } from "react";
+import { getVendorOrders } from "../hooks/requests";
 
 function Row(props) {
   const { row, user } = props;
@@ -50,19 +48,7 @@ function Row(props) {
         <TableCell align="left">{row.totalAmount}</TableCell>
         <TableCell align="left">
           {row.orderStatus == "Completed" && (
-            <Rating
-              name="simple-controlled"
-              value = {orderRating}
-              onChange={(event) => {
-                setRating(event.target.value)
-                updateVendorRating(
-                  event.target.value,
-                  row.vendorID,
-                  row.orderID,
-                  user
-                );
-              }}
-            />
+             <Rating name="read-only" value={0 && row.rating} readOnly />
           )}
         </TableCell>
       </TableRow>
@@ -109,14 +95,14 @@ function Row(props) {
   );
 }
 
-export default function UserOrder() {
+export default function VendorOrder() {
   const [orderList, setOrders] = useState([]);
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
 
   useEffect(async () => {
-    const orders = await getCustomerOrders(user.username);
-    console.log("User Orders", orders.data);
+
+    const orders = await getVendorOrders(user.username);
     setOrders(orders.data);
   }, []);
 

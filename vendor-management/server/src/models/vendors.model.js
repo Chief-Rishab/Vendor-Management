@@ -1,6 +1,7 @@
 const vendorsDatabase = require('./vendors.mongo')
 const mongoose = require('mongoose')
 const { updateUserOrderStatus } = require('./user.model')
+const { lazyrouter } = require('express/lib/application')
 
 
 async function addVendor(vendor){
@@ -143,6 +144,45 @@ async function updateOrderStatus(vendorID, orderID){
     return response.orderList;
 }
 
+function calculateNewRating(orderList){
+
+    let completed = 0;
+    let newRating = 0;
+
+    orderList.forEach(order => {
+        if(order.orderStatus == "Completed"){
+            
+            if(order.rating){
+                completed += 1;
+                newRating += order.rating;
+            }
+        }
+    })
+
+    newRating = newRating/completed;
+    return newRating
+}
+
+async function updateVendorRating(vendorID, rating, orderID){
+
+    const newID = mongoose.Types.ObjectId(orderID)
+    let response = await vendorsDatabase.findOneAndUpdate({_id: vendorID, "orderList.orderID": newID}, {
+        $set: {
+            "orderList.$.rating": rating,
+        }
+    }, {new: true}).clone();
+
+    const finalRating = calculateNewRating(response.orderList);
+    response = await vendorsDatabase.findOneAndUpdate({_id: vendorID}, {
+        $set: {
+            rating: finalRating,
+        }
+    }, {new: true});
+
+    return response;
+    
+}
+
 
 module.exports = {
     getVendors,
@@ -154,6 +194,7 @@ module.exports = {
     deleteItemFromMenu,
     editItemFromMenu,
     getItemFromMenu,
-    updateOrderStatus
+    updateOrderStatus,
+    updateVendorRating
     
 }
