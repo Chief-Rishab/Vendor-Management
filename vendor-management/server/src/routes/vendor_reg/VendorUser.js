@@ -11,7 +11,9 @@ const { HttpGetVendorOrders,
     HttpGetItemFromMenu,
     HttpUpdateOrderStatus,
     HttpAddOrderToVendor,
-    HttpUpdateVendorRating } = require('../vendors/vendors.controller')
+    HttpUpdateVendorRating, 
+    HttpGetVendorByID,
+    HttpGetOrdersByEmail} = require('../vendors/vendors.controller')
 require("../../../../passport2")(passport);
 
 /*
@@ -82,6 +84,7 @@ vendoruserRouter.get('/logout', passport.authenticate('jwt-vendor', { session: f
 
 vendoruserRouter.get('/:id/orders', HttpGetVendorOrders);
 vendoruserRouter.get('/:id/menu', HttpGetVendorMenu);
+vendoruserRouter.get('/:id/orders/email', HttpGetOrdersByEmail)
 vendoruserRouter.post('/:id/menu', HttpAddItemToMenu);
 vendoruserRouter.post('/:id/menu/edit/:itemID', HttpEditItemFromMenu)
 vendoruserRouter.get('/:id/menu/edit/:itemID', HttpGetItemFromMenu);
@@ -89,6 +92,7 @@ vendoruserRouter.delete('/:id/menu/:itemID', HttpDeleteItemFromMenu);
 vendoruserRouter.post('/:id/orders/:orderID/update', HttpUpdateOrderStatus)
 vendoruserRouter.post('/:id/orders', HttpAddOrderToVendor)
 vendoruserRouter.post('/:id/orders/:orderID/rate', HttpUpdateVendorRating)
+vendoruserRouter.get('/:id/get', HttpGetVendorByID)
 
 // //to keep user signed in in case he closes the app but didnt logged out
 vendoruserRouter.get('/authenticated', passport.authenticate('jwt-vendor', { session: false }), (req, res) => {

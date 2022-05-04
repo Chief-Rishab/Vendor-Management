@@ -11,8 +11,8 @@ const Home = props =>{
 
     const unauthenticatedHome = ()=>{
         return (
-            <div>
-                <h2 className="m-3" style={{fontSize:'25px'}}>Welcome to SmartVMC</h2>
+            <div style={{padding:200}}>
+                <h2 className="m-3" style={{fontSize:'30px', textAlign:'center'}}>Welcome to SmartVMC</h2>
             </div>
         )
     }
@@ -20,9 +20,9 @@ const Home = props =>{
     const authenticatedHome = ()=>{
         //console.log(user.email);
         return(
-            <div>
-                 <h2 className="m-3" style={{fontSize:'25px'}}>Welcome {user.email}</h2>
-                 <h2 className="m-3" style={{fontSize:'20px'}}>Great to see you back!!</h2>
+            <div style={{padding:200}}>
+                 <h2 className="m-3" style={{fontSize:'30px', textAlign:'center'}}>Welcome {user.email}</h2>
+                 <h2 className="m-3" style={{fontSize:'20px', textAlign:'center'}}>Great to see you back!!</h2>
             </div>
         )
     }

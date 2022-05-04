@@ -33,7 +33,7 @@ async function HttpGetItemFromCart(req, res) {
     let cart = await getCartByUsername(username)
     cart = cart['cart']['items'];
     let filtered = cart.filter(item => item.itemID.toString() == req.params.id)
-    console.log(filtered)
+    // console.log(filtered)
     return res.send(filtered[0])
 }
 
@@ -44,15 +44,15 @@ async function HttpRemoveItemFromCart(req, res) {
     const response = await deleteItemFromCart(username, itemID).then((response) => {
         return response
     });
-    console.log("Response inside HTTP Backend Delete Function", response);
+    // console.log("Response inside HTTP Backend Delete Function", response);
     res.send(response)
 }
 
 async function HttpPlaceOrder(req, res){
 
-    const {token, amount, cart, user, vendorName, newOrderID} = req.body;
-    console.log("REQBODY", req.body)
-    res.send(await placeOrder(token, amount, cart, user, vendorName, newOrderID));
+    const {token, amount, cart, user, vendorName, newOrderID, custID} = req.body;
+    // console.log()
+    res.send(await placeOrder(custID, token, amount, cart, user, vendorName, newOrderID));
 
 }
 

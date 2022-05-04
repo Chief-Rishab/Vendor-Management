@@ -112,7 +112,7 @@ function getWeeklyData(vendor) {
         weekOrders.push(getDailyOrder(i, month, orders))
     }
 
-    console.log(weekOrders);
+    // console.log(weekOrders);
 }
 
 module.exports = {

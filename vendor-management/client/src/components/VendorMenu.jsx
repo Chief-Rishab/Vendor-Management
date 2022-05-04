@@ -18,7 +18,7 @@ export default function VendorMenu() {
   const [currentMenu, setMenu] = useState([]);
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
-    console.log("User", user)
+    // console.log("User", user)
   const [checked, setChecked] = useState(false);
   const [changedMenu, setChange] = useState([]);
   const { id } = useParams();
@@ -26,7 +26,7 @@ export default function VendorMenu() {
   useEffect(async () => {
 
     let fetchedVendor = await HttpGetVendorMenu(user.email);
-    console.log("Fetched Vendor", fetchedVendor.data)
+    // console.log("Fetched Vendor", fetchedVendor.data)
     setVendor(fetchedVendor.data);
     setMenu(fetchedVendor.data.menu);
     setChange(fetchedVendor.data.menu);
@@ -50,14 +50,14 @@ export default function VendorMenu() {
       setChecked(event.target.checked);
     } else {
       let filtered = changedMenu.filter((item) => item.isVeg == true);
-      console.log(filtered);
+      // console.log(filtered);
       setChange(filtered);
 
       setChecked(event.target.checked);
     }
   };
 
-  return (
+  return ( currentMenu && 
     <div>
       <nav class="navbar navbar-dark bg-danger mb-5">
         <div class="container-fluid">

@@ -6,7 +6,7 @@ import { AuthContext } from '../Context/AuthContext_consumer';
 const Navbar = props =>{
     const navigate=useNavigate();
     const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
-    console.log(user);
+    // console.log(user);
     //Customer Logout handler
     const onClickLogoutHandler = ()=>{
         AuthService.logout().then(data=>{
@@ -105,6 +105,11 @@ const Navbar = props =>{
                 <Link to="/Menu">
                     <li className="nav-item nav-link">
                         Menu
+                    </li>
+                </Link>
+                <Link to="/menu/add">
+                    <li className="nav-item nav-link">
+                        Add Item to Menu
                     </li>
                 </Link>
                 <Link to="/VendorOrders">

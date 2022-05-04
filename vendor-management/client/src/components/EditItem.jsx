@@ -37,7 +37,7 @@ export default function EditItem() {
   useEffect(async() => {
 
     const response = await getMenuItem(itemID, user.email)
-    console.log("New", response)
+    // console.log("New", response)
     setName(response.itemName)
     setDescription(response.itemDescription)
     setPrice(response.itemPrice)
@@ -75,8 +75,8 @@ export default function EditItem() {
         isVeg: type
     }
 
-    console.log(item)
-    console.log(itemKey)
+    // console.log(item)
+    // console.log(itemKey)
     const response = await editMenuItem(item, user.email);
 
   };

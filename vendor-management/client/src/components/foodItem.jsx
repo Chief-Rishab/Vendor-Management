@@ -33,7 +33,7 @@ class FoodItem extends Component {
       const fetchedUser = await HttpGetUserByUsername(
         this.state.currrentUser.username
       );
-      console.log("Fetched User", fetchedUser)
+      // console.log("Fetched User", fetchedUser)
       let userCart = fetchedUser["cart"];
       if(userCart['items'].length === 0){
 

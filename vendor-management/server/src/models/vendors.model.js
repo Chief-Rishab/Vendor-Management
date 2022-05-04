@@ -23,7 +23,6 @@ async function getVendors() {
 async function getVendorByID(vendorID){
 
 
-    console.log(mongoose.Types.ObjectId.isValid(vendorID));
     return await vendorsDatabase.findById(vendorID)
 }
 
@@ -50,18 +49,20 @@ async function addOrderToVendor(vendorID, order, customerID, newOrderID, amount)
 
 async function getVendorOrders(vendorID){
 
-    console.log("VendorID", vendorID)
-    const response = await vendorsDatabase.find({"email": vendorID});
-    console.log(response[0])
-    return response[0].orderList;
+    console.log("Logging VendorID/ Email", vendorID)
+    const response = await vendorsDatabase.findOne({_id: vendorID});
+    // console.log("Lessgooo",response.filter(item => item.email == vendorID)[0])
+    console.log(response['orderList'])
+    return response
+    // return response.filter(item => item.email == vendorID)[0].orderList;
 }
 
 async function getVendorMenu(vendorID){
 
 
 
-    const response = await vendorsDatabase.findOne({_id: vendorID});
-    console.log("Nothing", response)
+    const response = await vendorsDatabase.findOne({"email": vendorID});
+    // console.log("Nothing", response)
     return response;
 }
 
@@ -88,7 +89,7 @@ async function addItemToMenu(vendorID, item){
 
 async function deleteItemFromMenu (vendorID, itemKey){
 
-    console.log("itemKey", itemKey, vendorID);
+    // console.log("itemKey", itemKey, vendorID);
 
     const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID}, {
         $pull: {
@@ -103,7 +104,7 @@ async function deleteItemFromMenu (vendorID, itemKey){
 
 async function editItemFromMenu(vendorID, itemKey, item){
 
-    console.log(item);
+    // console.log(item);
 
     const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID, "menu.itemKey": mongoose.Types.ObjectId(item.itemKey)}, {
 
@@ -118,7 +119,7 @@ async function editItemFromMenu(vendorID, itemKey, item){
 
     }, {new: true});
 
-    console.log(response);
+    // console.log(response);
 
     return response
 }
@@ -136,7 +137,7 @@ async function getItemFromMenu(vendorID, itemKey){
 
 async function updateOrderStatus(vendorID, orderID){
 
-    console.log("vendorID", vendorID)
+    // console.log("vendorID", vendorID)
 
     const response = await vendorsDatabase.findOneAndUpdate({"email": vendorID, "orderList.orderID": orderID}, {
         $set: {
@@ -144,7 +145,7 @@ async function updateOrderStatus(vendorID, orderID){
         }
     })
 
-    console.log("Response", response);
+    // console.log("Response", response);
     return response;
 }
 
@@ -187,6 +188,15 @@ async function updateVendorRating(vendorID, rating, orderID){
     
 }
 
+async function getOrdersByEmail(vendorEmail){
+
+    console.log("Fetching Vendor Orders Using Email")
+
+    const response = await vendorsDatabase.findOne({"email": vendorEmail})
+    console.log("Vendor Fetched", response)
+    return response;
+}
+
 
 module.exports = {
     getVendors,
@@ -199,6 +209,6 @@ module.exports = {
     editItemFromMenu,
     getItemFromMenu,
     updateOrderStatus,
-    updateVendorRating
-    
+    updateVendorRating,
+    getOrdersByEmail
 }

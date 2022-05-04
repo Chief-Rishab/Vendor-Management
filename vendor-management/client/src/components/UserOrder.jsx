@@ -59,7 +59,7 @@ function Row(props) {
                   event.target.value,
                   row.vendorID,
                   row.orderID,
-                  row.customerID
+                  user.username
                 );
               }}
             />
@@ -120,7 +120,7 @@ export default function UserOrder() {
     let sorted = orders.data.sort((a, b) => {
       return a.orderDate > b.orderDate;
     })
-    console.log(sorted)
+    // console.log(sorted)
     setOrders(sorted.reverse());
   }, []);
 

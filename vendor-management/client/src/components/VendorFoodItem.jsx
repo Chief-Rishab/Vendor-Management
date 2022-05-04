@@ -42,7 +42,7 @@ export default function VendorFoodItem({
   const onItemEdit = async () => {
     const API_ENDPOINT = `/menu/edit/${itemKey}`;
     navigate(API_ENDPOINT);
-    console.log("Edit Button Clicked");
+    // console.log("Edit Button Clicked");
   };
 
   const onItemDelete = async () => {
@@ -54,7 +54,7 @@ export default function VendorFoodItem({
         navigate("/menu");
       }, 2000);
     }
-    console.log(response);
+    // console.log(response);
   };
 
   return (

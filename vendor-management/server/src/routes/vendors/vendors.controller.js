@@ -8,7 +8,8 @@ const { getVendors,
     getItemFromMenu,
     updateOrderStatus,
     addOrderToVendor,
-    updateVendorRating } = require('../../models/vendors.model')
+    updateVendorRating,
+    getOrdersByEmail } = require('../../models/vendors.model')
 
 async function HttpGetAllVendors(req, res) {
     return res.send(await getVendors())
@@ -17,7 +18,7 @@ async function HttpGetAllVendors(req, res) {
 async function HttpGetVendorByID(req, res) {
 
     const vendorID = req.params.id
-    console.log("Backend", vendorID)
+    // console.log("Backend", vendorID)
 
     return res.send(await getVendorByID(vendorID))
 }
@@ -25,7 +26,7 @@ async function HttpGetVendorByID(req, res) {
 async function HttpGetVendorOrders(req, res) {
 
     const vendorID = req.params.id;
-    console.log("NOOO", vendorID)
+    // console.log("NOOO", vendorID)
 
     return res.send(await getVendorOrders(vendorID))
 }
@@ -33,7 +34,7 @@ async function HttpGetVendorOrders(req, res) {
 async function HttpGetVendorMenu(req, res) {
 
     const vendorID = req.params.id;
-    console.log("VendorID", vendorID)
+    // console.log("VendorID", vendorID)
     return res.send(await getVendorMenu(vendorID))
 }
 
@@ -74,7 +75,7 @@ async function HttpUpdateOrderStatus(req, res) {
 
     const orderID = req.params.orderID
     const vendorID = req.params.id;
-    console.log("HTTP", orderID, vendorID)
+    // console.log("HTTP", orderID, vendorID)
     return res.send(await updateOrderStatus(vendorID, orderID));
 }
 
@@ -82,7 +83,7 @@ async function HttpAddOrderToVendor(req, res) {
 
     const { cart, custID, newOrderID, amount } = req.body;
     const vendorID = req.params.id;
-    console.log("Values Log", cart, custID, vendorID);
+    // console.log("Values Log", cart, custID, vendorID);
 
     return res.send(await addOrderToVendor(vendorID, cart, custID, newOrderID, amount))
 }
@@ -93,6 +94,13 @@ async function HttpUpdateVendorRating(req, res){
     const vendorID = req.params.id;
     const orderID = req.params.orderID
     return res.send(await updateVendorRating(vendorID, rating,orderID));
+}
+
+async function HttpGetOrdersByEmail(req, res){
+
+    const vendorEmail = req.params.id;
+
+    return res.send(await getOrdersByEmail(vendorEmail))
 }
 
 module.exports = {
@@ -107,7 +115,8 @@ module.exports = {
     HttpGetItemFromMenu,
     HttpUpdateOrderStatus,
     HttpAddOrderToVendor,
-    HttpUpdateVendorRating
+    HttpUpdateVendorRating,
+    HttpGetOrdersByEmail
 }
 
 

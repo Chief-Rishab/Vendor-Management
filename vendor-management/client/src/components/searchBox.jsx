@@ -7,9 +7,9 @@ const SearchBox = ({ value, onChange }) => {
   const [searchString, setSearchString] = useState("");
   return (
     <TextField
-      sx={{ margin: 3, width: 0.5 }}
+      sx={{ margin: 3, marginLeft: 35, width: 0.5 }}
       value={searchString}
-      placeholder="Search for restaurants"
+      placeholder="Search for restaurants by name or location"
       id="fullWidth"
       onChange={(e) => {
         console.log("Value: ", e.target.value)

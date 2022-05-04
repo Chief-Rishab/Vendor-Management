@@ -22,7 +22,7 @@ async function addItemToCart(username, data) {
     const { item } = data
     const newItem = item['item']
     const vendorID = item['vendorID']
-    console.log("Logging itemID to insert", newItem.itemID)
+    // console.log("Logging itemID to insert", newItem.itemID)
     const newID = mongoose.Types.ObjectId(newItem.itemID);
     const response = await userDatabase.findOneAndUpdate({ username: username },
         {
@@ -61,7 +61,9 @@ async function deleteItemFromCart(username, itemid) {
     return response;
 }
 
-async function placeOrder(token, amount, cart, user, vendorName, newOrderID) {
+async function placeOrder(custID, token, amount, cart, user, vendorName, newOrderID) {
+
+    // console.log("Inside the function for Placing Order for ID", custID)
 
     const customer = await stripe.customers.create({
         email: token.email,
@@ -102,8 +104,8 @@ async function placeOrder(token, amount, cart, user, vendorName, newOrderID) {
         const orderDate = new Date();    
 
         // let vendor = await getVendorByID(cart.vendorID);
-
-        let response = await userDatabase.findOneAndUpdate({ username: user.username },
+            // console.log("Pushing to Customer OrderList")
+        let response = await userDatabase.findOneAndUpdate({ _id: custID },
             {
                 $push: {
                     "orderList": {
@@ -119,12 +121,14 @@ async function placeOrder(token, amount, cart, user, vendorName, newOrderID) {
             }, { new: true }).clone()
 
         // //* Delete items from cart
-
-        response = await userDatabase.findOneAndUpdate({ username: user.username }, {
+        // console.log("Deleting Items")
+        response = await userDatabase.findOneAndUpdate({ _id: custID }, {
             $set: {
                 "cart.items": []
             }
         }, { new: true }).clone()
+
+        // console.log("Logging Cart", response.cart)
 
         return response;
     }
@@ -146,21 +150,21 @@ async function getCustomerOrders(username){
 async function updateCustomerOrderStatus(username, orderID){
 
     const newID = mongoose.Types.ObjectId(orderID)
-    console.log("Hello", username, newID)
+    // console.log("Hello", username, newID)
 
     const response = await userDatabase.findOneAndUpdate({_id: username, "orderList.orderID": orderID}, {
         $set: {
             "orderList.$.orderStatus": "Completed",
         }
     }, {new: true});
-    console.log(response);
+    // console.log(response);
     return response;
 }
 
 async function updateCusomterOrderRating(username, orderID, rating){
 
     const newID = mongoose.Types.ObjectId(orderID)
-    const response = await userDatabase.findOneAndUpdate({_id: username, "orderList.orderID":orderID}, {
+    const response = await userDatabase.findOneAndUpdate({username: username, "orderList.orderID":orderID}, {
         $set: {
             "orderList.$.rating": rating,
         }

@@ -28,7 +28,7 @@ export async function HttpGetVendorByID(vendorID) {
 
 async function HttpGetVendorMenu(username){
 
-    console.log(`${API_URL}/vendor/${username}/menu`)
+    // console.log(`${API_URL}/vendor/${username}/menu`)
     const response = await axios.get(`${API_URL}/vendor/${username}/menu`)
     return response
 }
@@ -44,7 +44,7 @@ async function HttpGetUserByUsername(username) {
 async function HttpAddItemToCart(username, item) {
     let userEndpoint = userURL(username)
     userEndpoint = userEndpoint + "/cart"
-    console.log("Inside HTTP Function to add Item: ", {item})
+    // console.log("Inside HTTP Function to add Item: ", {item})
     const response = await axios.post(userEndpoint, {
         item,
     }).then((response) => {
@@ -58,7 +58,7 @@ async function deleteItemFromCart(username, itemID){
     let userEndpoint = userURL(username)
     userEndpoint = userEndpoint + `/cart/${itemID}`
     const response = await axios.delete(userEndpoint)
-    console.log("Inside requests delete function", response)
+    // console.log("Inside requests delete function", response)
     return response    
 }
 
@@ -67,7 +67,7 @@ async function getCustomerOrders(username){
     let userEndpoint = userURL(username)
     userEndpoint = userEndpoint + `/orders`
     const response = await axios.get(userEndpoint);
-    console.log("Get Customer Function");
+    // console.log("Get Customer Function");
     return response;
 }
 
@@ -79,10 +79,11 @@ async function updateVendorRating(rating, vendorID, orderID, customerID){
     return response;
 }
 
-async function getVendorOrders(vendorID){
+async function getVendorOrders(vendorEmail){
 
-    const URL = `${API_URL}/vendor/${vendorID}/orders`
+    const URL = `${API_URL}/vendor/${vendorEmail}/orders/email`
     const response = await axios.get(URL);
+    console.log("Logging the response from the backend: ", response)
     return response;
 }
 
@@ -91,7 +92,7 @@ async function getMenuItem(itemID, vendorID){
 
     const URL = `${API_URL}/vendor/${vendorID}/menu/edit/${itemID}`
     const response = await axios.get(URL);
-    console.log("Returned Response", response)
+    // console.log("Returned Response", response)
     return response.data;
 }
 
@@ -113,7 +114,7 @@ async function deleteItemFromMenu(item, vendorID){
 
 
     const URL = `${API_URL}/vendor/${vendorID}/menu/${item.itemKey}`
-    console.log("Sent", item)
+    // console.log("Sent", item)
     const response = await axios.delete(URL);
     return response;
 }

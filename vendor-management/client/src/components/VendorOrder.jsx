@@ -125,10 +125,7 @@ export default function VendorOrder() {
 
   useEffect(async () => {
     const orders = await getVendorOrders(user.email);
-    let sorted = orders.data.sort((a, b) => {
-      return a.orderDate < b.orderDate;
-    })
-    setOrders(orders.data);
+    setOrders(orders.data.orderList);
   }, []);
 
   return (
