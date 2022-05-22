@@ -20,8 +20,6 @@ Contributors
 - Add and delete items in your menu
 - See a dashboard for vendor side
 
-
-
 ## Tech Stack
 
 Dillinger uses a number of open source projects to work properly:
