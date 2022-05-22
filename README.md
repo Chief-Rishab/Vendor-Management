@@ -2,7 +2,8 @@
 ## _Food Ordering App Using MERN Stack_
 
 
-SmartVMC is a food-ordering app made by students of Birla Institute of Technology and Science-Pilani, Hyderabad Campus.
+SmartVMC is a food-ordering app made by students of Birla Institute of Technology and Science-Pilani, Hyderabad Campus, for our Software Engineering Course Project
+
 Contributors
 
 - Garvit Kashyap (Scrum Master an Developer)
