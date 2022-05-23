@@ -23,17 +23,16 @@ Contributors
 
 ## Tech Stack
 
-Dillinger uses a number of open source projects to work properly:
+These are the tools we used to create the app
 
-- ReactJS- HTML enhanced for web apps!
-- MongoDB - awesome web-based text editor
-- Javascript - Markdown parser done right. Fast and easy to extend.
-- Node.js - great UI boilerplate for modern web apps
-- Express - evented I/O for the backend
+- ReactJS
+- MongoDB
+- Javascrip
+- Node.js
+- Express 
 
 
 ## Installation
-
 
 
 Install the dependencies and devDependencies and start the server. Navigate to the main folder and run the following commands
@@ -50,3 +49,7 @@ cd client
 npm install
 npm start
 ```
+
+## To-Do
+- Write tests
+- Host on Heroku
