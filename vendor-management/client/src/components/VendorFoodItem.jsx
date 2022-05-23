@@ -48,7 +48,7 @@ export default function VendorFoodItem({
   const onItemDelete = async () => {
     const item = { itemKey, itemName };
     const response = await deleteItemFromMenu(item, user.email);
-    console.log(response)
+    // console.log(response)
     if (response.status === 200) {
       timerID = setTimeout(() => {
         navigate("/menu");

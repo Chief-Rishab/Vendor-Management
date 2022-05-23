@@ -26,33 +26,34 @@ async function getVendorByID(vendorID){
     return await vendorsDatabase.findById(vendorID)
 }
 
-async function addOrderToVendor(vendorID, order, customerID, newOrderID, amount){
+async function addOrderToVendor(vendorID, cart, customerID, newOrderID, amount){
 
-    console.log("Inside Log", vendorID, order, customerID);
+    // console.log("Inside Log", vendorID, cart, customerID);
 
     const response = await vendorsDatabase.findOneAndUpdate({_id: vendorID}, {
         $push: {
             "orderList": {
                 customerID: customerID,
                 orderID: newOrderID.toString(),
-                items: order['items'],
+                items: cart['items'],
                 orderStatus: "In-Progress",
                 totalAmount: amount,
                 date: new Date()
             }
         }
-    }).clone();
-    
+    }, {new: true}).clone();
 
+    console.log("Response: ", response);
+    
     return response;
 }
 
 async function getVendorOrders(vendorID){
 
-    console.log("Logging VendorID/ Email", vendorID)
+    // console.log("Logging VendorID/ Email", vendorID)
     const response = await vendorsDatabase.findOne({_id: vendorID});
     // console.log("Lessgooo",response.filter(item => item.email == vendorID)[0])
-    console.log(response['orderList'])
+    // console.log(response['orderList'])
     return response
     // return response.filter(item => item.email == vendorID)[0].orderList;
 }
@@ -190,10 +191,10 @@ async function updateVendorRating(vendorID, rating, orderID){
 
 async function getOrdersByEmail(vendorEmail){
 
-    console.log("Fetching Vendor Orders Using Email")
+    // console.log("Fetching Vendor Orders Using Email")
 
     const response = await vendorsDatabase.findOne({"email": vendorEmail})
-    console.log("Vendor Fetched", response)
+    // console.log("Vendor Fetched", response)
     return response;
 }
 

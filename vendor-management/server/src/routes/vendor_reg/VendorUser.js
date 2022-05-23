@@ -14,7 +14,9 @@ const { HttpGetVendorOrders,
     HttpUpdateVendorRating, 
     HttpGetVendorByID,
     HttpGetOrdersByEmail} = require('../vendors/vendors.controller')
-require("../../../../passport2")(passport);
+// require("../../../../passport2")(passport);
+require('../../services/passport2')(passport)
+
 
 /*
 usrname----------will have the email of the resteraunt 

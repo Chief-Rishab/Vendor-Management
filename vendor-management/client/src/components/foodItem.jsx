@@ -78,7 +78,7 @@ class FoodItem extends Component {
       }
       else{
 
-        console.log("User Cart", userCart)
+        // console.log("User Cart", userCart)
         const newItem = {
           itemID: this.props.itemKey,
           itemName: this.props.itemName,

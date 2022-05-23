@@ -47,7 +47,7 @@ const CartItem = ({ itemname, itemprice, user, itemID, setCart }) => {
           aria-label="delete"
           onClick={async () => {
             const response = await deleteItemFromCart(user.username, itemID);
-            console.log("Hello", response.data["cart"]);
+            // console.log("Hello", response.data["cart"]);
             setCart(response.data["cart"]);
           }}
         >

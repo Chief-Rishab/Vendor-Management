@@ -31,7 +31,7 @@ const VendorListing = () => {
   const [currentMenu, setMenu] = useState([]);
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
   const [checked, setChecked] = useState(false);
   const [changedMenu, setChange] = useState([])
   const { id } = useParams();
@@ -65,7 +65,7 @@ const VendorListing = () => {
       let filtered = changedMenu.filter((item) => 
         item.isVeg == true
       );
-      console.log(filtered);
+      // console.log(filtered);
       setChange(filtered)
 
       setChecked(event.target.checked);

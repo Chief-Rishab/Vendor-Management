@@ -13,7 +13,8 @@ const { HttpGetUserbyUsername,
     HttpGetCustomerOrders,
     HttpUpdateUserOrderStatus,
     HttpUpdateCustomerOrderRating } = require('./user.controller')
-require('../../../../passport1')(passport);
+// require('../../../../passport1')(passport);
+require('../../services/passport1')(passport)
 
 const signToken = userID => {
     return JWT.sign({
